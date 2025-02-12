@@ -1,3 +1,4 @@
+"use client";
 import { Box, Container } from "@mui/material";
 import ForgotPasswordForm from "./forgotPasswordForm";
 import Image from "next/image";
@@ -50,6 +51,7 @@ export default function ForgotPassword() {
           alt="Background Image"
           layout="fill"
           objectFit="cover"
+          priority={true}
           style={{ position: "absolute", zIndex: -1 }}
         />
       </Box>
