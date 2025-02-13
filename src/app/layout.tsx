@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Clubwars Supermatch",
+  title: "Delta Xi-Upsilon",
   description: "Online Armwrestlers Information System by Delta Xi-Upsilon",
 };
 
