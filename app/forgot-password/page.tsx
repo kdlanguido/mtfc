@@ -21,17 +21,18 @@ export default function ForgotPassword() {
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: "#1D1B20",
-          padding: 4,
+          padding: 3,
           position: "relative",
         }}
       >
         <Container
           sx={{
             backgroundColor: "white",
-            padding: 4,
+            padding:'4',
+            marginRight: {xs: 1,},
             borderRadius: 2,
+            width: { xs: '320px', md: '400px' },
             boxShadow: 3,
-            width: "400px",
             textAlign: "center",
           }}
         >
