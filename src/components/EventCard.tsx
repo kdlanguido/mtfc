@@ -68,7 +68,7 @@ export default function EventCard() {
               className="w-full"
               variant="outlined"
               color="primary"
-              href="https://drive.google.com/file/d/1g1c7-UgTOU5SOz9GbDFsdR6eeFk49w_K/view?usp=sharing"
+              href="https://res.cloudinary.com/dlobngrjy/image/upload/v1739476933/E-CERT-TATAG_rcpznw.png"
               target="_blank"
             >
               Titan Arms Taguig Member
@@ -77,7 +77,7 @@ export default function EventCard() {
               className="w-full"
               variant="outlined"
               color="primary"
-              href="https://drive.google.com/file/d/1ceJSaqkcbuP8tkXGxOhUHdS0jkoCrRQx/view?usp=sharing"
+              href="https://res.cloudinary.com/dlobngrjy/image/upload/v1739476933/E-CERT-BAS_tdmkqf.png"
               target="_blank"
             >
               Binangonan Arm Squad Member
