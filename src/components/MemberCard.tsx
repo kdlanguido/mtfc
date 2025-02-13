@@ -67,7 +67,16 @@ export default function MemberCard({
             width: "100%",
           }}
         >
-          <Typography className="text-center !fw-bold !p-0 !m-0" variant="h5">
+          <Typography
+            className="text-center !fw-bold !p-0 !m-0"
+            variant="h5"
+            sx={{
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              textDecoration: "none",
+            }}
+          >
             Puller Index
           </Typography>
           <Image

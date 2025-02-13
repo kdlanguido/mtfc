@@ -8,7 +8,17 @@ import Typography from "@mui/material/Typography";
 export default function BasicGrid() {
   return (
     <Box className="p-10">
-      <Typography className="text-center" variant="h4" color="initial">
+      <Typography
+        className="text-center"
+        variant="h4"
+        color="initial"
+        sx={{
+          fontFamily: "monospace",
+          fontWeight: 700,
+          letterSpacing: ".3rem",
+          textDecoration: "none",
+        }}
+      >
         Select Event
       </Typography>
 
