@@ -8,11 +8,12 @@ export default function Home() {
       <div className="grid grid-rows-[0px_1fr_20px] items-center justify-items-center min-h-screen p-8 pt-0 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]">
         <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
           <Image
-            src="/delta_xi_upsilon.png"
+            src="https://res.cloudinary.com/dlobngrjy/image/upload/v1739476999/DELTA_XI_UPSILON_vz3lec.png"
             alt="DXU logo"
             width={1024}
             height={768}
             priority
+            layout="intrinsic"
           />
           <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
             <li className="mb-2">A Grand Fraternity for All Armwrestlers </li>
