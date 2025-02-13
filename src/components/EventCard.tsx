@@ -31,10 +31,11 @@ export default function EventCard() {
               CLUBWARS Supermatch
             </Typography>
             <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              It&apos;s <b>Titan Arms Taguig</b> vs.
+              Delta Xi-Upsilon&apos;s <b>Titan Arms Taguig</b> vs.
               <b>Binangonan Arm Squad</b> in a fierce battle of strength, skill,
-              and strategy. Who will dominate the armwrestling table and claim
-              victory on February 15, 2025? 💥💪
+              and technique. <br></br>
+              <br></br>Who will dominate the armwrestling table and claim
+              victory? Watch out on February 15, 2025!
             </Typography>
           </CardContent>
         </CardActionArea>
