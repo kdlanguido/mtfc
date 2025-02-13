@@ -13,7 +13,13 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "next/link";
 
-const pages = ["Events", "Certificates", "About Us"];
+const pages = [
+  { label: "Events", link: "events" },
+  { label: "Certificates", link: "certificates" },
+  { label: "Mission & Vision", link: "mission-vision" },
+  { label: "Fraternal Pledge", link: "pledge" },
+  { label: "Members", link: "members" },
+];
 
 function NavBar2() {
   const styles = {
@@ -84,11 +90,11 @@ function NavBar2() {
             >
               {pages.map((page) => (
                 <Link
-                  key={page}
-                  href={`/${page.toLowerCase()}`}
+                  key={page.label}
+                  href={`/${page.link}`}
                   style={{ textAlign: "center" }}
                 >
-                  <MenuItem>{page}</MenuItem>
+                  <MenuItem>{page.label}</MenuItem>
                 </Link>
               ))}
             </Menu>
@@ -115,12 +121,12 @@ function NavBar2() {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.label}
                 onClick={handleCloseNavMenu}
-                href={`/${page.toLowerCase()}`}
+                href={`/${page.link}`}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                {page.label}
               </Button>
             ))}
           </Box>
