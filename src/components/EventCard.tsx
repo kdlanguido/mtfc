@@ -23,7 +23,7 @@ export default function EventCard() {
           <CardMedia
             component="img"
             height="140"
-            image="https://res.cloudinary.com/dlobngrjy/image/upload/v1739477001/TATAGXBAS_lj1zuw.png"
+            image="https://res.cloudinary.com/dlobngrjy/image/upload/v1739477784/TATAGXBAS_sczw2w.webp"
             alt="Event Image"
           />
           <CardContent>
