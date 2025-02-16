@@ -55,6 +55,7 @@ export default function SignUpForm() {
         placeholder="First Name"
         className="p-3 mb-2"
         value={signUpInput.firstName}
+        sx={{ width: "80%", height: "40px", fontSize: "14px", padding: "5px" }}
         onChange={handleInputChange}
       />
       <Input

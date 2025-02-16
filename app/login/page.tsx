@@ -14,7 +14,7 @@ export default function page() {
       className="relative w-screen h-screen bg-cover bg-center !backdrop-blur-xl"
     >
       <Box className="h-screen w-screen flex">
-        <Box className="w-1/3 pt-10 px-10 bg-zinc-200 bg-opacity-70">
+        <Box className="w-1/3 px-10 pt-20 bg-zinc-200 bg-opacity-70">
           <LoginForm />
         </Box>
 

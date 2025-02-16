@@ -1,26 +1,59 @@
-import React from "react";
+"use client";
+import { Box, Container } from "@mui/material";
 import SignUpForm from "./signUpForm";
-import { Box } from "@mui/joy";
-import COLORS from "@/constants/colors";
 import Image from "next/image";
 
-export default function page() {
+export default function ForgotPassword() {
   return (
     <Box
-      className="h-screen w-screen flex"
-      sx={{ background: COLORS.bg_dark_brown }}
+      sx={{
+        display: "flex",
+        height: "100vh",
+        position: "relative",
+        overflow: "hidden",
+        backgroundColor: "#1D1B20",
+      }}
     >
-      <Box className="w-1/3 pt-10 px-10">
-        <SignUpForm />
+      <Box
+        sx={{
+          flex: 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#1D1B20",
+          padding: 3,
+          position: "relative",
+        }}
+      >
+        <Container
+          sx={{
+            backgroundColor: "white",
+            padding:'4',
+            marginRight: {xs: 1,},
+            borderRadius: 2,
+            width: { xs: '320px', md: '420px' },
+            boxShadow: 3,
+            textAlign: "center",
+          }}
+        >
+          <SignUpForm />
+        </Container>
       </Box>
 
-      <Box className="w-2/3">
+      <Box
+        sx={{
+          flex: 1,
+          position: "relative",
+          clipPath: "polygon(0 0, 100% 0, 100% 100%, 25% 100%)",
+        }}
+      >
         <Image
-          className="object-cover w-auto h-full"
-          alt=""
           src="/assets/signup.webp"
-          width={1920}
-          height={1080}
+          alt="Background Image"
+          layout="fill"
+          objectFit="cover"
+          priority={true}
+          style={{ position: "absolute", zIndex: -1 }}
         />
       </Box>
     </Box>

@@ -49,7 +49,7 @@ const ForgotPasswordForm = () => {
   const handleConfirmChangePassword = () => {
     router.push("/login");
   };
-
+  
   const renderStep1 = () => (
     <Box className="w-full flex flex-col items-center bg-white p-10">
       <Image src={"/assets/sent.png"} width={40} height={40} alt={""} />
