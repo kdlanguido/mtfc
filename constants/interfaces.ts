@@ -6,3 +6,11 @@ export interface SignUpFormI {
   email: string;
   password: string;
 }
+
+export interface ProductI {
+  _id: string;
+  name: string;
+  price: number;
+  description: string;
+  isOnSale: boolean;
+}
