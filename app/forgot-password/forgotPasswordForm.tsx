@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Box, Button, Input, Select, Typography, Option } from "@mui/joy";
+import { Box, Button, Input, Typography } from "@mui/joy";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
@@ -49,7 +49,7 @@ const ForgotPasswordForm = () => {
   const handleConfirmChangePassword = () => {
     router.push("/login");
   };
-  
+
   const renderStep1 = () => (
     <Box className="w-full flex flex-col items-center bg-white p-10">
       <Image src={"/assets/sent.png"} width={40} height={40} alt={""} />
@@ -115,7 +115,7 @@ const ForgotPasswordForm = () => {
       </Button>
 
       <Typography level="body-sm" className="text-center text-stone-900">
-        Didn't receive an email?{" "}
+        Didn&apos;t receive an email?{" "}
         <Link href="#">
           <span className="font-bold" onClick={handleTryAgain}>
             Try Again

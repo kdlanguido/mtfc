@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { Box } from "@mui/joy";
 import LoginForm from "./loginForm";
 

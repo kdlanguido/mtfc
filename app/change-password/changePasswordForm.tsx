@@ -1,25 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { Box, Button, Input, Link, Select, Typography, Option } from "@mui/joy";
-import { SignUpFormI } from "@/constants/interfaces";
-import { FaEnvelopeOpenText, FaLock } from "react-icons/fa6";
+import { Box, Button, Input, Link, Typography } from "@mui/joy";
 import Image from "next/image";
 
 export default function ChangePasswordForm() {
   const [step, setStep] = useState(0);
   const [email, setEmail] = useState("Kdlanguido@gmail.com");
   const [verificationCode, setVerificationCode] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-
-  const [signUpInput, setSignUpInput] = useState<SignUpFormI>({
-    firstName: "",
-    lastName: "",
-    gender: "",
-    fitnessGoal: "",
-    email: "",
-    password: "",
-  });
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -46,7 +34,7 @@ export default function ChangePasswordForm() {
         className="!mb-3 !text-center text-stone-900 font-light"
         level="body-xs"
       >
-        Enter your email address below, and we’ll send you a link to reset your
+        Enter your email address below, and we&apos;ll send you a link to reset your
         password. Make sure to check your inbox (and spam folder) for the email.
       </Typography>
 
@@ -100,7 +88,7 @@ export default function ChangePasswordForm() {
       </Button>
 
       <Typography level="body-sm" className="text-center text-stone-900">
-        Didn't received an email?{" "}
+        Didn&apos;t received an email?{" "}
         <Link href="/login" className="!font-semibold text-stone-900">
           {" "}
           Try Again

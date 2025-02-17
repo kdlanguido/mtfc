@@ -1,10 +1,7 @@
-import { ObjectId } from "mongodb";
 import Product from "@/models/Product.model";
 import connectDb from "@/lib/mongoose";
 
-export async function GET(
-  request: Request
-) {
+export async function GET() {
   try {
 
     await connectDb();

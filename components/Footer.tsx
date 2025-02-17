@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 function Footer() {
   return (
@@ -44,26 +45,26 @@ function Footer() {
         <div className="flex flex-col justify-start">
           <h2 className="font-bold text-[15px]">QUICK LINKS</h2>
           <div className="flex flex-col items-center justify-center space-y-3 mt-3">
-            <a href="/" className="text-white">
+            <Link href="/" className="text-white">
               Home
-            </a>
-            <a href="/about" className="text-white">
+            </Link>
+            <Link href="/about" className="text-white">
               About
-            </a>
-            <a href="/classes" className="text-white">
+            </Link>
+            <Link href="/classes" className="text-white">
               Classes
-            </a>
-            <a href="/trainer" className="text-white">
+            </Link>
+            <Link href="/trainer" className="text-white">
               Trainer
-            </a>
-            <a href="/pricing" className="text-white">
+            </Link>
+            <Link href="/pricing" className="text-white">
               Pricing
-            </a>
+            </Link>
           </div>
         </div>
       </div>
       <div className="flex flex-row w-full justify-center mb-16 self-end space-x-2">
-        <a
+        <Link
           href="https://facebook.com"
           target="_blank"
           rel="noopener noreferrer"
@@ -75,8 +76,8 @@ function Footer() {
             width={34}
             className="object-cover"
           />
-        </a>
-        <a href="https://x.com" target="_blank" rel="noopener noreferrer">
+        </Link>
+        <Link href="https://x.com" target="_blank" rel="noopener noreferrer">
           <Image
             alt="X Logo"
             src="/assets/x.png"
@@ -84,8 +85,8 @@ function Footer() {
             width={34}
             className="object-cover"
           />
-        </a>
-        <a
+        </Link>
+        <Link
           href="https://instagram.com"
           target="_blank"
           rel="noopener noreferrer"
@@ -97,7 +98,7 @@ function Footer() {
             width={34}
             className="object-cover"
           />
-        </a>
+        </Link>
       </div>
     </div>
   );

@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
   const router = useRouter()
-  const [user, setUser] = useAtom(UserInformation);
-  const [isUserAuthenticated, setIsUserAuthenticated] = useAtom(IsUserAuthenticated);
+  const [, setUser] = useAtom(UserInformation);
+  const [, setIsUserAuthenticated] = useAtom(IsUserAuthenticated);
   const [loginInput, setLoginInput] = useState({
     email: "",
     password: "",

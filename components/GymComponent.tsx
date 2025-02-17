@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import React from "react";
 
 interface GymComponentProps {
@@ -22,12 +23,11 @@ function GymComponent({
 }: GymComponentProps) {
   return (
     <div
-      className={`w-full flex h-[600px] mb-40 ${
-        reverse ? "flex-row-reverse" : ""
-      }`}
+      className={`w-full flex h-[600px] mb-40 ${reverse ? "flex-row-reverse" : ""
+        }`}
     >
       <div className="w-1/2 h-full">
-        <img
+        <Image
           className="w-full h-full object-cover"
           src={imageUrl}
           alt="Trainers"

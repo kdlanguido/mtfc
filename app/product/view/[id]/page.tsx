@@ -10,8 +10,7 @@ interface PageProps {
 }
 
 export default function Page({ params }: PageProps) {
-  const [products, setProducts] = useState([]);
-  const [id, setId] = useState<string>("");
+  const [id,] = useState<string>("");
 
   useEffect(() => {
     // const getId = async () => {

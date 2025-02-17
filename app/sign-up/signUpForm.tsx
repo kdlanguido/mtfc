@@ -9,7 +9,6 @@ import {
   Select,
   Typography,
   Option,
-  Skeleton,
 } from "@mui/joy";
 import { SignUpFormI } from "@/constants/interfaces";
 

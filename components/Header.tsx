@@ -36,8 +36,8 @@ const Header = () => {
     }
   ];
 
-  const [isUserAuthenticated, setIsUserAuthenticated] = useAtom(IsUserAuthenticated);
-  const [userInformation, setUserInformation] = useAtom(UserInformation);
+  const [isUserAuthenticated,] = useAtom(IsUserAuthenticated);
+  const [userInformation,] = useAtom(UserInformation);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const Header = () => {
       localStorage.setItem('IsUserAuthenticated', JSON.stringify(isUserAuthenticated));
       localStorage.setItem('UserInformation', JSON.stringify(userInformation));
     }
-  }, [isUserAuthenticated, isMounted]);
+  }, [isUserAuthenticated, isMounted, userInformation]);
 
   if (!isMounted) {
     return null;
