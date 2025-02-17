@@ -19,7 +19,7 @@ import {
 
 const Header = () => {
   return (
-    <Box bgcolor={"#808080"} className="p-5 flex !justify-between !w-screen">
+    <Box bgcolor={"#808080"} className=" p-5 flex !justify-between">  {/* removed code by lloyd '!w-screen' for consistent layout */}
       <Image
         alt={""}
         src={"/assets/logo.png"}

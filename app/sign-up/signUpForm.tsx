@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import {
   Box,
@@ -42,11 +41,11 @@ export default function SignUpForm() {
 
   return (
     <Box className="w-full">
-      <Typography className="!mb-1 !text-center text-stone-50" level="h3">
+      <Typography className="!mb-1 !text-center text-stone-50" level="h3" sx={{ color: "white" }}>
         Sign Up now!
       </Typography>
 
-      <Typography className="!mb-3 !text-center text-stone-50" level="body-sm">
+      <Typography className="!mb-3 !text-center text-stone-50" level="body-sm" sx={{ color: "white" }}>
         Unlock Your Potential: Join Us Today!
       </Typography>
 
@@ -55,7 +54,6 @@ export default function SignUpForm() {
         placeholder="First Name"
         className="p-3 mb-2"
         value={signUpInput.firstName}
-        sx={{ width: "80%", height: "40px", fontSize: "14px", padding: "5px" }}
         onChange={handleInputChange}
       />
       <Input
@@ -130,7 +128,7 @@ export default function SignUpForm() {
         Sign Up
       </Button>
 
-      <Typography level="body-sm" className="text-center text-stone-50">
+      <Typography level="body-sm" className="text-center text-stone-50" sx={{ color: "white", pt: 3,}}>
         Already have an account?{" "}
         <Link href="/login" className="!font-semibold text-stone-50">
           {" "}
