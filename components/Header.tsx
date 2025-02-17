@@ -1,25 +1,60 @@
 "use client";
 
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemContent,
-  ListItemDecorator,
-} from "@mui/joy";
+import { useAtom } from "jotai";
+import { IsUserAuthenticated, UserInformation } from "@/stores/UserInfo.store";
+import { Box, List, ListItem, ListItemButton, ListItemContent, ListItemDecorator } from "@mui/joy";
 import Image from "next/image";
-import React from "react";
-import {
-  FaHouse,
-  FaCircleQuestion,
-  FaPeopleGroup,
-  FaMoneyBills,
-  FaPhoneVolume,
-  FaLock,
-} from "react-icons/fa6";
+import React, { useEffect, useState } from "react";
+import { FaBell, FaCartShopping, FaLock } from "react-icons/fa6";
+import { NavLinksI } from "@/constants/interfaces";
 
 const Header = () => {
+  const navLinks: NavLinksI[] = [
+    {
+      label: "Home",
+      url: "/"
+    },
+    {
+      label: "About",
+      url: "/About"
+    },
+    {
+      label: "Trainers",
+      url: "/Trainers"
+    },
+    {
+      label: "Pricing",
+      url: "/Pricing"
+    },
+    {
+      label: "Shop",
+      url: "/store"
+    },
+    {
+      label: "Contact",
+      url: "/Contact"
+    }
+  ];
+
+  const [isUserAuthenticated, setIsUserAuthenticated] = useAtom(IsUserAuthenticated);
+  const [userInformation, setUserInformation] = useAtom(UserInformation);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isMounted && typeof window !== 'undefined') {
+      localStorage.setItem('IsUserAuthenticated', JSON.stringify(isUserAuthenticated));
+      localStorage.setItem('UserInformation', JSON.stringify(userInformation));
+    }
+  }, [isUserAuthenticated, isMounted]);
+
+  if (!isMounted) {
+    return null;
+  }
+
   return (
     <Box bgcolor={"#808080"} className="p-5 flex !justify-between !w-full">
       <Image
@@ -29,56 +64,65 @@ const Header = () => {
         width={100}
         className="object-cover"
       />
-      <Box component="nav">
-        <List className="text-zinc-50 " orientation="horizontal">
-          <ListItem className="font-semibold text-center px-5">
-            <ListItemButton component="a" href="/">
-              <ListItemContent className="text-zinc-50 ">Home</ListItemContent>
-            </ListItemButton>
-          </ListItem>
-          <ListItem className="font-semibold text-center px-5">
-            <ListItemButton component="a" href="/about">
-              <ListItemContent className="text-zinc-50 ">About</ListItemContent>
-            </ListItemButton>
-          </ListItem>
-          <ListItem className="font-semibold text-center px-5">
-            <ListItemButton component="a" href="/trainers">
-              <ListItemContent className="text-zinc-50 ">
-                Trainers
-              </ListItemContent>
-            </ListItemButton>
-          </ListItem>
-          <ListItem className="font-semibold text-center px-5">
-            <ListItemButton component="a" href="/pricing">
-              <ListItemContent className="text-zinc-50 ">
-                Pricing
-              </ListItemContent>
-            </ListItemButton>
-          </ListItem>
-          <ListItem className="font-semibold text-center px-5">
-            <ListItemButton component="a" href="/contact-us">
-              <ListItemContent className="text-zinc-50 ">
-                Contact
-              </ListItemContent>
-            </ListItemButton>
-          </ListItem>
+
+      <Box className="ml-40" component="nav">
+        <List className="text-zinc-50" orientation="horizontal">
+          {navLinks.map((link) => (
+            <ListItem key={link.label} className="font-semibold text-center px-5">
+              <ListItemButton component="a" href={link.url}>
+                <ListItemContent className="text-zinc-50">{link.label}</ListItemContent>
+              </ListItemButton>
+            </ListItem>
+          ))}
         </List>
       </Box>
 
       <Box component="nav">
         <List component="nav" orientation="horizontal">
-          <ListItem>
-            <ListItemButton
-              className="bg-"
-              variant="solid"
-              sx={{ background: "#FB1F11" }}
-            >
-              <ListItemDecorator>
-                <FaLock />
-              </ListItemDecorator>
-              <ListItemContent className="text-zinc-50 ">Login</ListItemContent>
-            </ListItemButton>
-          </ListItem>
+          {!isUserAuthenticated && (
+            <ListItem>
+              <ListItemButton
+                variant="solid"
+                href="/login"
+                component="a"
+              >
+                <ListItemDecorator>
+                  <FaLock />
+                </ListItemDecorator>
+                <ListItemContent className="text-zinc-50">Login</ListItemContent>
+              </ListItemButton>
+            </ListItem>
+          )}
+
+          {isUserAuthenticated && (
+            <Box className="flex ">
+              <ListItem>
+                <ListItemButton>
+                  <ListItemDecorator>
+                    <FaCartShopping className="text-zinc-50" />
+                  </ListItemDecorator>
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem>
+                <ListItemButton>
+                  <ListItemDecorator>
+                    <FaBell className="text-zinc-50" />
+                  </ListItemDecorator>
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem>
+                <ListItemButton variant="outlined">
+                  <ListItemDecorator>
+                    <FaLock className="text-zinc-50" />
+                  </ListItemDecorator>
+                  <ListItemContent className="text-zinc-50">Welcome, {userInformation.fullName}</ListItemContent>
+                </ListItemButton>
+              </ListItem>
+            </Box>
+          )}
+
         </List>
       </Box>
     </Box>
