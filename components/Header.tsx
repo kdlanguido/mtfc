@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Box,
   List,
@@ -30,31 +32,31 @@ const Header = () => {
       <Box component="nav">
         <List className="text-zinc-50 " orientation="horizontal">
           <ListItem className="font-semibold text-center px-5">
-            <ListItemButton>
+            <ListItemButton component="a" href="/">
               <ListItemContent className="text-zinc-50 ">Home</ListItemContent>
             </ListItemButton>
           </ListItem>
           <ListItem className="font-semibold text-center px-5">
-            <ListItemButton>
+            <ListItemButton component="a" href="/about">
               <ListItemContent className="text-zinc-50 ">About</ListItemContent>
             </ListItemButton>
           </ListItem>
           <ListItem className="font-semibold text-center px-5">
-            <ListItemButton>
+            <ListItemButton component="a" href="/trainers">
               <ListItemContent className="text-zinc-50 ">
                 Trainers
               </ListItemContent>
             </ListItemButton>
           </ListItem>
           <ListItem className="font-semibold text-center px-5">
-            <ListItemButton>
+            <ListItemButton component="a" href="/pricing">
               <ListItemContent className="text-zinc-50 ">
                 Pricing
               </ListItemContent>
             </ListItemButton>
           </ListItem>
           <ListItem className="font-semibold text-center px-5">
-            <ListItemButton>
+            <ListItemButton component="a" href="/contact-us">
               <ListItemContent className="text-zinc-50 ">
                 Contact
               </ListItemContent>
