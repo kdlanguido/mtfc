@@ -27,7 +27,7 @@ export default function StoreItemCard({
         sx={{
           height: 220,
         }}
-        image="/assets/storeitem.png"
+        image={ProductInfo.imgUrl}
         title="Store Item"
       />
       <CardContent>

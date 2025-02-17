@@ -12,5 +12,5 @@ export interface ProductI {
   name: string;
   price: number;
   description: string;
-  isOnSale: boolean;
+  imgUrl: string;
 }

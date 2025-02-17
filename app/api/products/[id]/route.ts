@@ -1,5 +1,6 @@
-import { CollectionNames, Database } from "@/constants/DB";
 import { ObjectId } from "mongodb";
+import Product from "@/models/Product";
+import connectDb from "@/lib/mongoose";
 
 export async function GET(
   request: Request,
@@ -7,19 +8,28 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const objectId = new ObjectId(id);
 
-    const Products = await Database.collection(CollectionNames.Products)
-      .find({ _id: objectId })
-      .toArray();
-
-    if (Products.length === 0) {
-      return new Response(JSON.stringify({ message: "No Products found" }), {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      });
+    if (!ObjectId.isValid(id)) {
+      return new Response(
+        JSON.stringify({ message: "Invalid product ID" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
     }
-    return new Response(JSON.stringify(Products), { status: 200 });
+
+    await connectDb();
+    const product = await Product.findOne({ _id: new ObjectId(id) });
+
+    if (!product) {
+      return new Response(
+        JSON.stringify({ message: "Product not found" }),
+        { status: 404, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    return new Response(JSON.stringify(product), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (error) {
     console.error("Error fetching data:", error);
     return new Response("Failed to connect to the database", { status: 500 });
