@@ -1,9 +1,15 @@
+import { IsUserAuthenticated, UserInformation } from "@/stores/UserInfo.store";
 import { Box, Typography, Input, Button, Link } from "@mui/joy";
+import { useAtom } from "jotai";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
+  const router = useRouter()
+  const [, setUser] = useAtom(UserInformation);
+  const [, setIsUserAuthenticated] = useAtom(IsUserAuthenticated);
   const [loginInput, setLoginInput] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -13,6 +19,32 @@ export default function LoginForm() {
       [e.target.name]: e.target.value,
     });
   };
+
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('/api/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(loginInput),
+      });
+
+      const data = await response.json();
+
+      if (response.status === 200) {
+
+        setUser(data.user)
+        setIsUserAuthenticated(true)
+        router.push("/")
+      } else {
+        console.error("Login failed:", data.msg || "Unknown error");
+      }
+    } catch (error) {
+      console.error("Error occurred during login:", error);
+    }
+  };
+
 
   return (
     <Box>
@@ -24,10 +56,10 @@ export default function LoginForm() {
       </Typography>
 
       <Input
-        name="username"
-        placeholder="Username"
+        name="email"
+        placeholder="Email"
         className="p-3 mb-2"
-        value={loginInput.username}
+        value={loginInput.email}
         onChange={handleInputChange}
       />
 
@@ -52,7 +84,7 @@ export default function LoginForm() {
         variant="soft"
         color="neutral"
         className="!text-stone-900 w-full mt-3 mb-3 bg-slate-50"
-        onClick={() => console.log(loginInput)}
+        onClick={handleLogin}
       >
         Log In
       </Button>

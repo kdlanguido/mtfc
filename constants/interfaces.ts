@@ -6,3 +6,28 @@ export interface SignUpFormI {
   email: string;
   password: string;
 }
+
+export interface ProductI {
+  _id: string;
+  name: string;
+  price: number;
+  description: string;
+  imgUrl: string;
+}
+
+export interface LoginI {
+  email: string;
+  password: string;
+}
+
+export interface UserInformationI {
+  email: string;
+  profileUrl: string;
+  userType: string;
+  fullName: string;
+}
+
+export interface NavLinksI {
+  label: string;
+  url: string;
+}
