@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import React from "react";
 import NavImage from "./NavImage";
 import HomeCommunityDashboard from "./HomeCommunityDashboard";
+import HomeAboutUs from "./HomeAboutUs";
 
 export default function HomeMainContent() {
   return (
@@ -18,6 +19,7 @@ export default function HomeMainContent() {
       </Box>
 
       <HomeCommunityDashboard />
+      <HomeAboutUs />
     </Box>
   );
 }
