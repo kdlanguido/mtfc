@@ -20,6 +20,7 @@ function CenterNavBar() {
         fontFamily: "Poppins, sans-serif",
         fontWeight: "bold",
         margin: 0,
+        zIndex: 100,
       }}
     >
       <nav
