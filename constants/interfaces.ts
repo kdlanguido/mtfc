@@ -31,3 +31,13 @@ export interface NavLinksI {
   label: string;
   url: string;
 }
+
+export interface GymInfoI {
+  name: string;
+  title: string;
+  description: string;
+  scheduleWeekDays: string;
+  scheduleWeekEnds: string;
+  imageUrl: string;
+  reverse: boolean;
+}

@@ -1,10 +1,10 @@
 "use client";
 import Image from "next/image";
 import { GymInfoI } from "@/constants/interfaces";
-import Image from "next/image";
 import React from "react";
 
 function GymComponent({ GymInfo }: { GymInfo: GymInfoI }) {
+  const { reverse = false } = GymInfo;
   return (
     <div
       className={`w-full flex h-[600px] mb-40 ${
@@ -14,6 +14,8 @@ function GymComponent({ GymInfo }: { GymInfo: GymInfoI }) {
       <div className="w-1/2 h-full">
         <Image
           className="w-full h-full object-cover"
+          width={1920}
+          height={600}
           src={GymInfo.imageUrl}
           alt="Trainers"
         />
