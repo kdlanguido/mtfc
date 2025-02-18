@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { GymInfoI } from "@/constants/interfaces";
+import Image from "next/image";
 import React from "react";
 
 function GymComponent({ GymInfo }: { GymInfo: GymInfoI }) {

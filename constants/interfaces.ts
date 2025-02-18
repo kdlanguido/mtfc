@@ -12,22 +12,22 @@ export interface ProductI {
   name: string;
   price: number;
   description: string;
-  isOnSale: boolean;
+  imgUrl: string;
 }
 
-export interface PriceInfoI {
-  title: string;
-  inclusions: string;
-  inclusions2: string;
-  price: number;
+export interface LoginI {
+  email: string;
+  password: string;
 }
 
-export interface GymInfoI {
-  name: string;
-  title: string;
-  description: string;
-  scheduleWeekDays: string;
-  scheduleWeekEnds: string;
-  imageUrl: string;
-  reverse?: boolean;
+export interface UserInformationI {
+  email: string;
+  profileUrl: string;
+  userType: string;
+  fullName: string;
+}
+
+export interface NavLinksI {
+  label: string;
+  url: string;
 }
