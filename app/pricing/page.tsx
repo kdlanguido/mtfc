@@ -1,7 +1,14 @@
-import React from 'react'
+import FitnessTable from "@/components/FitnessTable";
+import Header from "@/components/Header";
+import React from "react";
 
-export default function page() {
-    return (
-        <div>page</div>
-    )
+function page() {
+  return (
+    <>
+      <Header />
+      <FitnessTable />
+    </>
+  );
 }
+
+export default page;
