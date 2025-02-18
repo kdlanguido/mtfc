@@ -14,3 +14,20 @@ export interface ProductI {
   description: string;
   isOnSale: boolean;
 }
+
+export interface PriceInfoI {
+  title: string;
+  inclusions: string;
+  inclusions2: string;
+  price: number;
+}
+
+export interface GymInfoI {
+  name: string;
+  title: string;
+  description: string;
+  scheduleWeekDays: string;
+  scheduleWeekEnds: string;
+  imageUrl: string;
+  reverse?: boolean;
+}

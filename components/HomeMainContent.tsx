@@ -1,7 +1,6 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
-import Image from "next/image";
+import { Box } from "@mui/material";
 import React from "react";
 import NavImage from "./NavImage";
 import HomeCommunityDashboard from "./HomeCommunityDashboard";

@@ -1,25 +1,9 @@
 "use client";
+import Image from "next/image";
+import { GymInfoI } from "@/constants/interfaces";
 import React from "react";
 
-interface GymComponentProps {
-  name: string;
-  title: string;
-  description: string;
-  scheduleWeekDays: string;
-  scheduleWeekEnds: string;
-  imageUrl: string;
-  reverse?: boolean;
-}
-
-function GymComponent({
-  name,
-  title,
-  description,
-  scheduleWeekDays,
-  scheduleWeekEnds,
-  imageUrl,
-  reverse = false,
-}: GymComponentProps) {
+function GymComponent({ GymInfo }: { GymInfo: GymInfoI }) {
   return (
     <div
       className={`w-full flex h-[600px] mb-40 ${
@@ -27,9 +11,9 @@ function GymComponent({
       }`}
     >
       <div className="w-1/2 h-full">
-        <img
+        <Image
           className="w-full h-full object-cover"
-          src={imageUrl}
+          src={GymInfo.imageUrl}
           alt="Trainers"
         />
       </div>
@@ -38,18 +22,18 @@ function GymComponent({
         style={{ fontFamily: "Pridi-Light, sans-serif" }}
       >
         <div className="mt-10 ml-10 mr-20">
-          <p className="text-5xl font-bold">{name}</p>
-          <p className="mt-3 text-2xl">{title}</p>
+          <p className="text-5xl font-bold">{GymInfo.name}</p>
+          <p className="mt-3 text-2xl">{GymInfo.title}</p>
           <p
             className="mt-4 text-xl leading-7"
             style={{ letterSpacing: "0.05em" }}
           >
-            {description}
+            {GymInfo.description}
           </p>
 
           <p className="mt-16 text-xl">Instructor Schedule: </p>
-          <p className="mt-3 text-xl">{scheduleWeekDays}</p>
-          <p className="text-xl">{scheduleWeekEnds}</p>
+          <p className="mt-3 text-xl">{GymInfo.scheduleWeekDays}</p>
+          <p className="text-xl">{GymInfo.scheduleWeekEnds}</p>
         </div>
       </div>
     </div>

@@ -1,13 +1,11 @@
 "use client";
 import React from "react";
-import { atom, useAtom } from "jotai";
+import { useAtom } from "jotai";
 import GymComponentMain from "./GymComponentMain";
-
-const selectedNavItemAtom = atom<string | null>("Gym");
+import { selectedNavItemAtom } from "@/stores/StoreItem.store";
 
 function CenterNavBar() {
   const [selectedNavItem, setSelectedNavItem] = useAtom(selectedNavItemAtom);
-
   const handleNavItemClick = (item: string) => {
     setSelectedNavItem(item);
   };
