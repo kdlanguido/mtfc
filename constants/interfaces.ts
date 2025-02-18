@@ -64,3 +64,4 @@ export interface CartState {
   quantities: number[];
   checked: boolean[];
 }
+

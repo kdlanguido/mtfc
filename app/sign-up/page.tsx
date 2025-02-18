@@ -27,12 +27,8 @@ export default function ForgotPassword() {
       >
         <Container
           sx={{
-            backgroundColor: "white",
-            padding:'4',
             marginRight: {xs: 1,},
-            borderRadius: 2,
             width: { xs: '320px', md: '420px' },
-            boxShadow: 3,
             textAlign: "center",
           }}
         >
