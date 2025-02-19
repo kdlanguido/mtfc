@@ -31,7 +31,9 @@ export default function Dashboard() {
         <>
             <Box sx={{ display: "flex" }}>
                 <Box component="main" sx={{ flexGrow: 1, p: 3, mt: 8 }}>
+
                     <Typography variant="h4">Welcome to the Dashboard</Typography>
+
                     <Button variant="contained" sx={{ mt: 2 }} onClick={toggleChat}>
                         {chatOpen ? "Close Chat" : "Open Chat"}
                     </Button>
