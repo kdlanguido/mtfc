@@ -31,3 +31,37 @@ export interface NavLinksI {
   label: string;
   url: string;
 }
+
+export interface GymInfoI {
+  name: string;
+  title: string;
+  description: string;
+  scheduleWeekDays: string;
+  scheduleWeekEnds: string;
+  imageUrl: string;
+  reverse: boolean;
+}
+
+export interface PhoneNumberInputProps {
+  value: string;
+  onChange: (value: string) => void;
+  error: boolean;
+}
+
+export interface Product {
+  title: string;
+  image: string;
+  price: number;
+  description: string;
+}
+
+export interface CartDrawerProps {
+  open: boolean;
+  onClose: () => void;
+}
+
+export interface CartState {
+  quantities: number[];
+  checked: boolean[];
+}
+

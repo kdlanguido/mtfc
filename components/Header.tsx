@@ -16,15 +16,15 @@ const Header = () => {
     },
     {
       label: "About",
-      url: "/About"
+      url: "/about"
     },
     {
       label: "Trainers",
-      url: "/Trainers"
+      url: "/trainers"
     },
     {
       label: "Pricing",
-      url: "/Pricing"
+      url: "/pricing"
     },
     {
       label: "Shop",
@@ -32,7 +32,7 @@ const Header = () => {
     },
     {
       label: "Contact",
-      url: "/Contact"
+      url: "/contact"
     }
   ];
 
@@ -96,13 +96,14 @@ const Header = () => {
 
           {isUserAuthenticated && (
             <Box className="flex ">
-              <ListItem>
+              <ListItem sx={{ '&:hover': { backgroundColor: '#D4D4D4' } }}>
                 <ListItemButton>
                   <ListItemDecorator>
                     <FaCartShopping className="text-zinc-50" />
                   </ListItemDecorator>
                 </ListItemButton>
               </ListItem>
+
 
               <ListItem>
                 <ListItemButton>
@@ -113,11 +114,10 @@ const Header = () => {
               </ListItem>
 
               <ListItem>
-                <ListItemButton variant="outlined">
+                <ListItemButton>
                   <ListItemDecorator>
                     <FaLock className="text-zinc-50" />
                   </ListItemDecorator>
-                  <ListItemContent className="text-zinc-50">Welcome, {userInformation.fullName}</ListItemContent>
                 </ListItemButton>
               </ListItem>
             </Box>

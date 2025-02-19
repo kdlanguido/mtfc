@@ -1,4 +1,5 @@
 "use client";
+
 import { Box, IconButton, Typography, Stack, Card, CardContent } from "@mui/material";
 import { Search, Chat, Notifications, Add, ChatBubbleOutline, ThumbUpAltOutlined, ShareOutlined, ThumbDownOffAlt } from "@mui/icons-material";
 import Header from "@/components/Header";
@@ -86,3 +87,4 @@ const CommunityDashboard = () => {
 };
 
 export default CommunityDashboard;
+
