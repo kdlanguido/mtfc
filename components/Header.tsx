@@ -32,7 +32,7 @@ const Header = () => {
     },
     {
       label: "Contact",
-      url: "/contact"
+      url: "/contact-us"
     }
   ];
 
