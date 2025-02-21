@@ -65,7 +65,19 @@ export interface CartState {
   checked: boolean[];
 }
 
+export interface EmailInfoI {
+  to: string;
+  subject: string;
+  html: string;
+}
 
+export interface ForgotPasswordNewPasswordI {
+  newPassword: string;
+  newPasswordMatch: string;
+  handleChangeNewPassword: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangeNewPasswordMatch: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleConfirmChangePassword: () => void;
+}
 export interface ButtonI {
   style: string;
   onClick: () => void;
