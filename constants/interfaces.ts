@@ -65,7 +65,6 @@ export interface CartState {
   checked: boolean[];
 }
 
-<<<<<<< Updated upstream
 
 export interface ButtonI {
   style: string;
@@ -73,7 +72,7 @@ export interface ButtonI {
   title: string;
 }
 
-=======
+
 export interface EmailInfoI {
   to: string;
   subject: string;
@@ -87,4 +86,3 @@ export interface ForgotPasswordNewPasswordI {
   handleChangeNewPasswordMatch: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleConfirmChangePassword: () => void;
 }
->>>>>>> Stashed changes
