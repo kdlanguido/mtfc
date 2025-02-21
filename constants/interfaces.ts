@@ -65,8 +65,10 @@ export interface CartState {
   checked: boolean[];
 }
 
+
 export interface ButtonI {
   style: string;
   onClick: () => void;
   title: string;
 }
+

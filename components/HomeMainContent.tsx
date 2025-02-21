@@ -5,7 +5,9 @@ import React from "react";
 import NavImage from "./NavImage";
 import HomeCommunityDashboard from "./HomeCommunityDashboard";
 import HomeAboutUs from "./HomeAboutUs";
+
 import HomeItemList from "./HomeItemList";
+
 
 export default function HomeMainContent() {
   return (
