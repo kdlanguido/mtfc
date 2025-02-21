@@ -1,13 +1,13 @@
 "use client";
 
-import { Box, IconButton, Typography, Stack, Card, CardContent } from "@mui/material";
-import { Search, Chat, Notifications, Add, ChatBubbleOutline, ThumbUpAltOutlined, ShareOutlined, ThumbDownOffAlt } from "@mui/icons-material";
+import { Box, IconButton, Stack, } from "@mui/material";
+import { Search, Chat, Add, } from "@mui/icons-material";
 import Header from "@/components/Header";
 import Sidebar from "@/components/sidebarCommunity";
 import SearchInput from "@/components/SearchBarCommunity";
 import CommunityCard from "@/components/CommunityFeed";
 
-const testimonialGroups = [
+const CommunityFeeds = [
     [
         {
             image: '/assets/about-image.png',
@@ -66,15 +66,15 @@ const CommunityDashboard = () => {
                 }}>
                     <SearchInput />
                     <Stack spacing={2} sx={{ width: 600 }}>
-                        {testimonialGroups.flat().map((testimonial, idx) => (
-                            <CommunityCard key={idx} testimonial={testimonial} />
+                        {CommunityFeeds.flat().map((CommunityFeeds, idx) => (
+                            <CommunityCard key={idx} CommunityFeeds={CommunityFeeds} />
                         ))}
                     </Stack>
                 </Box>
 
-                <Box sx={{ flex: 1 }}>
+                <Box sx={{ flex: 1,  pt: { xs: 5, sm: 5, md: 3 }, textAlign: "center",}}>
                     <Box>
-                        {[Chat, Notifications, Add].map((Icon, index) => (
+                        {[Chat, Add].map((Icon, index) => (
                             <IconButton key={index} sx={{ color: "white" }}>
                                 <Icon />
                             </IconButton>
@@ -87,4 +87,3 @@ const CommunityDashboard = () => {
 };
 
 export default CommunityDashboard;
-
