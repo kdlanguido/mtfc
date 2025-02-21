@@ -18,8 +18,9 @@ const typographyStyle = {
     ml: 0.5,
 };
 
-interface TestimonialProps {
-    testimonial: {
+interface CommunityFeedsProps {
+    CommunityFeeds: {
+
         image: string;
         name: string;
         text: string;
@@ -30,19 +31,20 @@ interface TestimonialProps {
     };
 }
 
-const CommunityCard: React.FC<TestimonialProps> = ({ testimonial }) => {
+const CommunityCard: React.FC<CommunityFeedsProps> = ({ CommunityFeeds }) => {
+
     return (
         <Card sx={{ backgroundColor: "#222", color: "white", display: "flex", justifyContent: "center" }}>
             <CardContent>
                 <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 1 }}>
-                    <Box component="img" src={testimonial.image} alt={`${testimonial.name}'s photo`} sx={{ width: 45, height: 45, borderRadius: "50%" }} />
+                    <Box component="img" src={CommunityFeeds.image} alt={`${CommunityFeeds.name}'s photo`} sx={{ width: 45, height: 45, borderRadius: "50%" }} />
                     <Box>
-                        <Typography variant="body1" sx={{ fontSize: "0.8rem" }}>{testimonial.name}</Typography>
+                        <Typography variant="body1" sx={{ fontSize: "0.8rem" }}>{CommunityFeeds.name}</Typography>
                     </Box>
                 </Box>
 
                 <Typography sx={{ fontSize: "0.8rem", mt: 1, mb: 2, borderBottom: "1px solid white", pb: 1.5, borderTop: "1px solid white", pt: 1.5 }}>
-                    {testimonial.text}
+                    {CommunityFeeds.text}
                 </Typography>
 
                 <Stack direction="row" justifyContent="start" spacing={2} mt={1}>
@@ -50,7 +52,7 @@ const CommunityCard: React.FC<TestimonialProps> = ({ testimonial }) => {
                         <IconButton key={index} sx={iconButtonStyle}>
                             <Icon sx={iconStyle} />
                             <Typography sx={typographyStyle}>
-                                {[testimonial.likes, testimonial.unlikes, testimonial.comments, testimonial.share][index]}
+                                {[CommunityFeeds.likes, CommunityFeeds.unlikes, CommunityFeeds.comments, CommunityFeeds.share][index]}
                             </Typography>
                         </IconButton>
                     ))}
