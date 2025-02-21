@@ -94,6 +94,7 @@ const CommunityDashboard = () => {
                         <IconButton sx={{ color: "white" }}>
                             <Add />
                         </IconButton>
+
                     </Box>
                 </Box>
             </Stack>
@@ -101,4 +102,6 @@ const CommunityDashboard = () => {
     );
 };
 
+
 export default CommunityDashboard;
+

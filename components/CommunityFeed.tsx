@@ -20,6 +20,7 @@ const typographyStyle = {
 
 interface CommunityFeedsProps {
     CommunityFeeds: {
+
         image: string;
         name: string;
         text: string;
@@ -31,6 +32,7 @@ interface CommunityFeedsProps {
 }
 
 const CommunityCard: React.FC<CommunityFeedsProps> = ({ CommunityFeeds }) => {
+
     return (
         <Card sx={{ backgroundColor: "#222", color: "white", display: "flex", justifyContent: "center" }}>
             <CardContent>

@@ -6,11 +6,14 @@ import NavImage from "./NavImage";
 import HomeCommunityDashboard from "./HomeCommunityDashboard";
 import HomeAboutUs from "./HomeAboutUs";
 
+import HomeItemList from "./HomeItemList";
+
+
 export default function HomeMainContent() {
   return (
-    <Box className="h-screen bg-[#2F2D2D]">
+    <Box className=" bg-[#2F2D2D]">
       <Box
-        className="flex !gap-x-[120] justify-center relative border"
+        className="flex !gap-x-[120] justify-center relative mb-20"
         sx={{ marginTop: "-40px" }}
       >
         <NavImage />
@@ -20,6 +23,7 @@ export default function HomeMainContent() {
 
       <HomeCommunityDashboard />
       <HomeAboutUs />
+      <HomeItemList />
     </Box>
   );
 }
