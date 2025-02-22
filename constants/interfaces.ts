@@ -78,3 +78,9 @@ export interface ForgotPasswordNewPasswordI {
   handleChangeNewPasswordMatch: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleConfirmChangePassword: () => void;
 }
+
+export interface ButtonI {
+  style: string;
+  onClick: () => void;
+  title: string;
+}
