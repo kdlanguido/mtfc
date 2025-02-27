@@ -11,3 +11,7 @@ export const totalQuantityAtom = atom((get) => {
   const { quantities } = get(cartAtom);
   return quantities.reduce((acc, quantity) => acc + quantity, 0);
 });
+
+export const termsModalAtom = atom(false);
+export const cardModalAtom = atom(false);
+export const gcashModalAtom = atom(false);
