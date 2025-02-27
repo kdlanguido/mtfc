@@ -2,7 +2,14 @@
 
 import { useAtom } from "jotai";
 import { IsUserAuthenticated, UserInformation } from "@/stores/UserInfo.store";
-import { Box, List, ListItem, ListItemButton, ListItemContent, ListItemDecorator } from "@mui/joy";
+import {
+  Box,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemContent,
+  ListItemDecorator,
+} from "@mui/joy";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { FaBell, FaCartShopping, FaLock } from "react-icons/fa6";
@@ -12,32 +19,32 @@ const Header = () => {
   const navLinks: NavLinksI[] = [
     {
       label: "Home",
-      url: "/"
+      url: "/",
     },
     {
       label: "About",
-      url: "/about"
+      url: "/about",
     },
     {
       label: "Trainers",
-      url: "/trainers"
+      url: "/trainers",
     },
     {
       label: "Pricing",
-      url: "/pricing"
+      url: "/pricing",
     },
     {
       label: "Shop",
-      url: "/store"
+      url: "/store",
     },
     {
       label: "Contact",
-      url: "/contact"
-    }
+      url: "/contact",
+    },
   ];
 
-  const [isUserAuthenticated,] = useAtom(IsUserAuthenticated);
-  const [userInformation,] = useAtom(UserInformation);
+  const [isUserAuthenticated] = useAtom(IsUserAuthenticated);
+  const [userInformation] = useAtom(UserInformation);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -45,9 +52,12 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    if (isMounted && typeof window !== 'undefined') {
-      localStorage.setItem('IsUserAuthenticated', JSON.stringify(isUserAuthenticated));
-      localStorage.setItem('UserInformation', JSON.stringify(userInformation));
+    if (isMounted && typeof window !== "undefined") {
+      localStorage.setItem(
+        "IsUserAuthenticated",
+        JSON.stringify(isUserAuthenticated)
+      );
+      localStorage.setItem("UserInformation", JSON.stringify(userInformation));
     }
   }, [isUserAuthenticated, isMounted, userInformation]);
 
@@ -68,9 +78,14 @@ const Header = () => {
       <Box className="ml-40" component="nav">
         <List className="text-zinc-50" orientation="horizontal">
           {navLinks.map((link) => (
-            <ListItem key={link.label} className="font-semibold text-center px-5">
+            <ListItem
+              key={link.label}
+              className="font-semibold text-center px-5"
+            >
               <ListItemButton component="a" href={link.url}>
-                <ListItemContent className="text-zinc-50">{link.label}</ListItemContent>
+                <ListItemContent className="text-zinc-50">
+                  {link.label}
+                </ListItemContent>
               </ListItemButton>
             </ListItem>
           ))}
@@ -81,29 +96,26 @@ const Header = () => {
         <List component="nav" orientation="horizontal">
           {!isUserAuthenticated && (
             <ListItem>
-              <ListItemButton
-                variant="solid"
-                href="/login"
-                component="a"
-              >
+              <ListItemButton variant="solid" href="/login" component="a">
                 <ListItemDecorator>
                   <FaLock />
                 </ListItemDecorator>
-                <ListItemContent className="text-zinc-50">Login</ListItemContent>
+                <ListItemContent className="text-zinc-50">
+                  Login
+                </ListItemContent>
               </ListItemButton>
             </ListItem>
           )}
 
           {isUserAuthenticated && (
             <Box className="flex ">
-              <ListItem sx={{ '&:hover': { backgroundColor: '#D4D4D4' } }}>
+              <ListItem sx={{ "&:hover": { backgroundColor: "#D4D4D4" } }}>
                 <ListItemButton>
                   <ListItemDecorator>
                     <FaCartShopping className="text-zinc-50" />
                   </ListItemDecorator>
                 </ListItemButton>
               </ListItem>
-
 
               <ListItem>
                 <ListItemButton>
@@ -122,7 +134,6 @@ const Header = () => {
               </ListItem>
             </Box>
           )}
-
         </List>
       </Box>
     </Box>
