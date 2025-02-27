@@ -6,7 +6,7 @@ import StoreItemCard from "./StoreItemCard";
 import { ProductI } from "@/constants/interfaces";
 import Loading from "@/app/store/loading";
 
-export default function StoreItems() {
+export default function TopRatedItems() {
   const [products, setProducts] = useState<ProductI[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -14,7 +14,7 @@ export default function StoreItems() {
 
     const fetchProducts = async () => {
       try {
-        const response = await fetch("/api/products/");
+        const response = await fetch("/api/products/toprated");
         const data = await response.json();
         setProducts(data)
         setLoading(false)

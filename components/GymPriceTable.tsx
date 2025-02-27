@@ -1,27 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PriceTable from "./PriceTable";
 
 function GymPriceTable() {
-  const fetchData = [
-    {
-      title: "Daily",
-      inclusions: "Access to gym equipment",
-      inclusions2: "Use of locker room facilities",
-      price: 100,
-    },
-    {
-      title: "Daily",
-      inclusions: "Access to gym equipment",
-      inclusions2: "Use of locker room facilities",
-      price: 1000,
-    },
-  ];
+
+  const [pricing, setPricing] = useState([]);
+  const [, setLoading] = useState(true);
+
+  useEffect(() => {
+
+    const fetchPricing = async () => {
+      try {
+        const response = await fetch("/api/pricing/Boxing");
+        const data = await response.json();
+        setPricing(data)
+        setLoading(false)
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchPricing()
+
+  }, []);
+
+
   return (
-    <div
-      className="flex flex-row justify-center space-x-36"
-      style={{ marginTop: 184 }}
-    >
-      {fetchData.map((priceInfo, key) => (
+    <div className="flex flex-row justify-center space-x-36 mt-[80px]">
+      {pricing?.map((priceInfo, key) => (
         <PriceTable PriceInfo={priceInfo} key={key} />
       ))}
     </div>

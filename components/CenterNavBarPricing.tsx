@@ -1,93 +1,37 @@
 "use client";
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import { atom, useAtom } from "jotai";
-import GymPriceTable from "./GymPriceTable";
-import BoxingPriceTable from "./BoxingPriceTable";
-import MuayThaiPriceTable from "./MuayThaiPriceTable";
-import TaekwondoPriceTable from "./TaekwondoPriceTable";
-
-// Define a Jotai atom for the active page state
-const activePageAtom = atom("Gym");
+import React, { useEffect, useState } from "react";
+import PriceTable from "./PriceTable";
 
 const pages = ["Gym", "Boxing", "Muay Thai", "Taekwondo"];
 
 function ResponsiveAppBar() {
-
-  const [activePage, setActivePage] = useAtom(activePageAtom);
+  const [activePage, setActivePage] = useState<string>("Gym");
 
   const handleCloseNavMenu = (page: string) => {
     setActivePage(page);
   };
 
-  const renderPage = () => {
-    switch (activePage) {
-      case "Gym":
-        return <GymPriceTable />;
-      case "Boxing":
-        return <BoxingPriceTable />;
-      case "Muay Thai":
-        return <MuayThaiPriceTable />;
-      case "Taekwondo":
-        return <TaekwondoPriceTable />;
-      default:
-        return <GymPriceTable />;
-    }
-  };
-
   return (
     <>
-      <AppBar
-        position="static"
-        sx={{ backgroundColor: "#808080", height: "81px" }}
-      >
-        <Container maxWidth="xl" sx={{ height: "100%" }}>
-          <Toolbar disableGutters sx={{ height: "100%" }}>
-            <Box
-              sx={{
-                flexGrow: 1,
-                display: "flex",
-                justifyContent: "center",
-                height: "100%",
-              }}
-            >
-              {pages.map((page) => (
-                <Button
-                  key={page}
-                  onClick={() => handleCloseNavMenu(page)}
-                  sx={{
-                    height: "81px",
-                    color: activePage === page ? "#808080" : "white",
-                    display: "block",
-                    backgroundColor:
-                      activePage === page ? "white" : "transparent",
-                    borderRadius: 0,
-                    "&:hover": {
-                      backgroundColor:
-                        activePage === page
-                          ? "white"
-                          : "rgba(255, 255, 255, 0.1)",
-                    },
-                    px: 3,
-                    fontFamily: "InterExtraBold, sans-serif",
-                    fontWeight: "extra-bold",
-                    fontSize: "32px",
-                    paddingX: 7,
-                    textTransform: page === "Gym" ? "uppercase" : "none",
-                  }}
-                >
-                  {page}
-                </Button>
-              ))}
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-      {renderPage()}
+      <div className="bg-[#808080] h-20">
+        <div className="max-w-screen-xl mx-auto h-full flex items-center">
+          <div className="flex-grow flex justify-center h-full">
+            {pages.map((page) => (
+              <button
+                key={page}
+                onClick={() => handleCloseNavMenu(page)}
+                className={`h-full ${activePage === page
+                  ? "text-gray-700 bg-white"
+                  : "text-white bg-transparent"
+                  } flex items-center justify-center px-6 text-2xl font-extrabold rounded-none transition duration-300 hover:bg-opacity-10`}
+              >
+                {page === "Gym" ? page.toUpperCase() : page}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+      <PriceTable sport={activePage.toLowerCase()} />
     </>
   );
 }

@@ -7,6 +7,7 @@ import JoinNowButton from "@/components/JoinNowBtn";
 import { ParallaxBanner } from "react-scroll-parallax";
 
 export default function About() {
+
     return (
         <>
             <Header />
