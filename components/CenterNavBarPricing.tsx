@@ -17,7 +17,7 @@ const activePageAtom = atom("Gym");
 const pages = ["Gym", "Boxing", "Muay Thai", "Taekwondo"];
 
 function ResponsiveAppBar() {
-  // Use the atom with useAtom to manage active page state
+
   const [activePage, setActivePage] = useAtom(activePageAtom);
 
   const handleCloseNavMenu = (page: string) => {

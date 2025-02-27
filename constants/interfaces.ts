@@ -21,6 +21,7 @@ export interface LoginI {
 }
 
 export interface UserInformationI {
+  _id: string;
   email: string;
   profileUrl: string;
   userType: string;
@@ -48,9 +49,10 @@ export interface PhoneNumberInputProps {
   error: boolean;
 }
 
-export interface Product {
-  title: string;
-  image: string;
+export interface ProductI {
+  _id: string;
+  name: string;
+  imgUrl: string;
   price: number;
   description: string;
 }

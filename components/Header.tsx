@@ -5,40 +5,19 @@ import { IsUserAuthenticated, UserInformation } from "@/stores/UserInfo.store";
 import { Box, List, ListItem, ListItemButton, ListItemContent, ListItemDecorator } from "@mui/joy";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { FaBell, FaCartShopping, FaLock } from "react-icons/fa6";
-import { NavLinksI } from "@/constants/interfaces";
+import { FaBell, FaCartShopping, FaLock, FaUser } from "react-icons/fa6";
+import { NavLinks } from "@/constants/app";
+import { FaCog, FaSignOutAlt } from "react-icons/fa";
+import { CartDrawerState } from "@/stores/StoreItem.store";
 
 const Header = () => {
-  const navLinks: NavLinksI[] = [
-    {
-      label: "Home",
-      url: "/"
-    },
-    {
-      label: "About",
-      url: "/about"
-    },
-    {
-      label: "Trainers",
-      url: "/trainers"
-    },
-    {
-      label: "Pricing",
-      url: "/pricing"
-    },
-    {
-      label: "Shop",
-      url: "/store"
-    },
-    {
-      label: "Contact",
-      url: "/contact-us"
-    }
-  ];
 
+  const [cartDrawerState, setCartDrawerState] = useAtom(CartDrawerState)
   const [isUserAuthenticated,] = useAtom(IsUserAuthenticated);
   const [userInformation,] = useAtom(UserInformation);
   const [isMounted, setIsMounted] = useState(false);
+  const [userDropdownIsOpen, setUserDropdownIsOpen] = useState(false);
+  const [userDropdownMyProfileIsOpen, setUserDropdownMyProfileIsOpen] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -55,6 +34,21 @@ const Header = () => {
     return null;
   }
 
+  const toggleCart = () => {
+    setCartDrawerState(!cartDrawerState)
+  }
+
+  const toggleUserDropdownIsOpen = () => {
+    setUserDropdownIsOpen(!userDropdownIsOpen);
+  };
+
+  const toggleUserDropdownMyProfileIsOpen = () => {
+    setUserDropdownIsOpen(!userDropdownIsOpen);
+  };
+
+  const toggleUserDropdownLogout = () => {
+  };
+
   return (
     <Box bgcolor={"#808080"} className="p-5 flex !justify-between !w-full">
       <Image
@@ -67,7 +61,7 @@ const Header = () => {
 
       <Box className="ml-40" component="nav">
         <List className="text-zinc-50" orientation="horizontal">
-          {navLinks.map((link) => (
+          {NavLinks.map((link) => (
             <ListItem key={link.label} className="font-semibold text-center px-5">
               <ListItemButton component="a" href={link.url}>
                 <ListItemContent className="text-zinc-50">{link.label}</ListItemContent>
@@ -97,13 +91,12 @@ const Header = () => {
           {isUserAuthenticated && (
             <Box className="flex ">
               <ListItem sx={{ '&:hover': { backgroundColor: '#D4D4D4' } }}>
-                <ListItemButton>
+                <ListItemButton onClick={toggleCart}>
                   <ListItemDecorator>
                     <FaCartShopping className="text-zinc-50" />
                   </ListItemDecorator>
                 </ListItemButton>
               </ListItem>
-
 
               <ListItem>
                 <ListItemButton>
@@ -114,12 +107,29 @@ const Header = () => {
               </ListItem>
 
               <ListItem>
-                <ListItemButton>
+                <ListItemButton onClick={toggleUserDropdownIsOpen}>
                   <ListItemDecorator>
-                    <FaLock className="text-zinc-50" />
+                    <FaUser className="text-zinc-50" />
                   </ListItemDecorator>
                 </ListItemButton>
+
+                {userDropdownIsOpen && (
+                  <Box className="absolute bg-white shadow-lg rounded-lg p-2 right-0 w-40" sx={{ marginTop: 17, zIndex: 1 }}>
+                    <ul>
+                      <li onClick={toggleUserDropdownMyProfileIsOpen} className="flex items-center space-x-2 p-2 hover:bg-gray-200 cursor-pointer">
+                        <FaCog className="text-gray-500" />
+                        <span>My Profile</span>
+                      </li>
+                      <li onClick={toggleUserDropdownLogout} className="flex items-center space-x-2 p-2 hover:bg-gray-200 cursor-pointer">
+                        <FaSignOutAlt className="text-gray-500" />
+                        <span>Log out</span>
+                      </li>
+                    </ul>
+                  </Box>
+                )}
               </ListItem>
+
+
             </Box>
           )}
 
