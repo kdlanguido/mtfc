@@ -38,6 +38,37 @@ export default function SignUpForm() {
     });
   };
 
+  const submitSignUp = async () => {
+    const userData = {
+      email: signUpInput.email,
+      password: signUpInput.password,
+      fullName: signUpInput.firstName + signUpInput.lastName,
+      gender: signUpInput.gender,
+      fitnessGoal: signUpInput.fitnessGoal
+    };
+
+    try {
+      const response = await fetch('/api/user/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Sign-up Successful')
+      } else {
+        console.error("Error:", data.message);
+      }
+    } catch (error) {
+      console.error("An error occurred while submitting the form:", error);
+    }
+  };
+
+
   return (
     <Box className="w-full">
       <Typography className="!mb-1 !text-center text-stone-50" level="h3" sx={{ color: "white" }}>
@@ -122,12 +153,12 @@ export default function SignUpForm() {
         variant="soft"
         color="neutral"
         className="!text-stone-900 w-full mt-3 mb-3"
-        onClick={() => console.log(signUpInput)}
+        onClick={submitSignUp}
       >
         Sign Up
       </Button>
 
-      <Typography level="body-sm" className="text-center text-stone-50" sx={{ color: "white", pt: 3,}}>
+      <Typography level="body-sm" className="text-center text-stone-50" sx={{ color: "white", pt: 3, }}>
         Already have an account?{" "}
         <Link href="/login" className="!font-semibold text-stone-50">
           {" "}
