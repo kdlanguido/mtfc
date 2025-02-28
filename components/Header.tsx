@@ -12,9 +12,9 @@ import {
 } from "@mui/joy";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { FaBell, FaCartShopping, FaLock, FaUser } from "react-icons/fa6";
+import { FaBell, FaCartShopping, FaLock, FaUser, FaUserShield } from "react-icons/fa6";
 import { DefaultProfileImgUrl, NavLinks } from "@/constants/app";
-import { FaCog, FaSignOutAlt } from "react-icons/fa";
+import { FaCog, FaSignOutAlt, FaUserCircle, FaUserCog } from "react-icons/fa";
 import { CartDrawerState } from "@/stores/StoreItem.store";
 import { useRouter } from "next/navigation";
 import { Divider } from "@mui/material";
@@ -26,7 +26,7 @@ const Header = () => {
   const [cartDrawerState, setCartDrawerState] = useAtom(CartDrawerState)
   const [isUserAuthenticated, setIsUserAuthenticated] = useAtom(IsUserAuthenticated);
   const [userInformation, setUserInformation] = useAtom(UserInformation);
-  const [myProfileModalState, setMyProfileModalState] = useAtom(MyProfileModalState)
+  const [, setMyProfileModalState] = useAtom(MyProfileModalState)
 
   const [isMounted, setIsMounted] = useState(false);
   const [userDropdownIsOpen, setUserDropdownIsOpen] = useState(false);
@@ -68,8 +68,12 @@ const Header = () => {
     router.push('/login')
   };
 
+  const handleMyProfileClick = () => {
+    router.push('/profile')
+  }
+
   return (
-    <Box bgcolor={"#808080"} className="p-5 flex !justify-between !w-full">
+    <Box bgcolor={"#808080"} className="p-5 flex !justify-between !w-full relative z-10">
       <Image
         alt={""}
         src={"/assets/logo.png"}
@@ -147,11 +151,15 @@ const Header = () => {
                         <Divider />
                       </li>
                       <li onClick={toggleUserDropdownMyProfileIsOpen} className="flex items-center space-x-2 p-2 hover:bg-gray-200 cursor-pointer">
-                        <FaCog className="text-gray-500" />
+                        <FaUserCog className="text-gray-500 !text-[14px]" />
+                        <span>Account Settings</span>
+                      </li>
+                      <li onClick={handleMyProfileClick} className="flex items-center space-x-2 p-2 hover:bg-gray-200 cursor-pointer">
+                        <FaUserShield className="text-gray-500 !text-[14px]" />
                         <span>My Profile</span>
                       </li>
                       <li onClick={toggleUserDropdownLogout} className="flex items-center space-x-2 p-2 hover:bg-gray-200 cursor-pointer">
-                        <FaSignOutAlt className="text-gray-500" />
+                        <FaSignOutAlt className="text-gray-500 !text-[14px]" />
                         <span>Log out</span>
                       </li>
                     </ul>

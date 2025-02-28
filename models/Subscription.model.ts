@@ -6,6 +6,7 @@ interface Subscription extends Document {
     subscriptionStatus: String;
     subscriptionEnd: Date;
     subscriptionStart: Date;
+    qrCodeUrl: String;
 }
 
 const subscriptionSchema = new Schema<Subscription>({
@@ -14,6 +15,7 @@ const subscriptionSchema = new Schema<Subscription>({
     subscriptionStatus: { type: String, required: true },
     subscriptionEnd: { type: Date, required: false },
     subscriptionStart: { type: Date, required: false },
+    qrCodeUrl: { type: String, required: true },
 });
 
 const SubscriptionModel = mongoose.models.Subscription || mongoose.model<Subscription>("Subscription", subscriptionSchema);

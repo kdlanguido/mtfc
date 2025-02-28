@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import CartDrawer from "@/components/CartDrawer";
 import MyProfileModal from "@/components/MyProfileModal";
-import Header from "@/components/Header";
+import HeaderContainer from "@/components/HeaderContainer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,12 +25,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
-        <Header />
+        <HeaderContainer />
         {children}
         <CartDrawer />
         <MyProfileModal />

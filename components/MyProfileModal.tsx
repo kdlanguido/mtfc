@@ -68,7 +68,7 @@ export default function MyProfileModal() {
     >
       <Card className="w-[450px]">
         <Box>
-          <Typography level="title-lg">My Profile</Typography>
+          <Typography level="title-lg">Account Settings</Typography>
         </Box>
 
         <Box className="mb-2">
