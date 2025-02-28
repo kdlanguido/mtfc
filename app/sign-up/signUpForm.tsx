@@ -10,8 +10,12 @@ import {
   Option,
 } from "@mui/joy";
 import { SignUpFormI } from "@/constants/interfaces";
+import { useRouter } from "next/navigation";
 
 export default function SignUpForm() {
+
+  const router = useRouter();
+
   const [signUpInput, setSignUpInput] = useState<SignUpFormI>({
     firstName: "",
     lastName: "",
@@ -37,6 +41,38 @@ export default function SignUpForm() {
       [e.target.name]: e.target.value,
     });
   };
+
+  const submitSignUp = async () => {
+    const userData = {
+      email: signUpInput.email,
+      password: signUpInput.password,
+      fullName: signUpInput.firstName + " " + signUpInput.lastName,
+      gender: signUpInput.gender,
+      fitnessGoal: signUpInput.fitnessGoal
+    };
+
+    try {
+      const response = await fetch('/api/user/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Sign-up Successful')
+        router.push('/login')
+      } else {
+        console.error("Error:", data.message);
+      }
+    } catch (error) {
+      console.error("An error occurred while submitting the form:", error);
+    }
+  };
+
 
   return (
     <Box className="w-full">
@@ -89,8 +125,9 @@ export default function SignUpForm() {
           }));
         }}
       >
-        <Option value="Item 1">Item 1</Option>
-        <Option value="Item 2">Item 2</Option>
+        <Option value="lose-weight">Lose Weight</Option>
+        <Option value="build-muscle">Build Muscle</Option>
+        <Option value="maintain">Maintain</Option>
       </Select>
 
       <Input
@@ -122,12 +159,12 @@ export default function SignUpForm() {
         variant="soft"
         color="neutral"
         className="!text-stone-900 w-full mt-3 mb-3"
-        onClick={() => console.log(signUpInput)}
+        onClick={submitSignUp}
       >
         Sign Up
       </Button>
 
-      <Typography level="body-sm" className="text-center text-stone-50" sx={{ color: "white", pt: 3,}}>
+      <Typography level="body-sm" className="text-center text-stone-50" sx={{ color: "white", pt: 3, }}>
         Already have an account?{" "}
         <Link href="/login" className="!font-semibold text-stone-50">
           {" "}

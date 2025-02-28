@@ -10,7 +10,7 @@ const countryCodes = [
   { code: "+61", country: "Australia", flag: "/assets/auslogo.png" },
 ];
 
-function PhoneNumberInput({ value, onChange, error }: PhoneNumberInputProps) {
+function PhoneNumberInput({ value, onChange, error, name }: PhoneNumberInputProps) {
   const [countryCode, setCountryCode] = useState("+63");
   const [localNumber, setLocalNumber] = useState("");
 

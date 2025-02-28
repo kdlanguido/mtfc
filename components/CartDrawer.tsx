@@ -1,170 +1,179 @@
 "use client";
-import React, { useEffect } from "react";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import { Checkbox, FormControlLabel, Button } from "@mui/material";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
-import { cartAtom, totalQuantityAtom } from "@/stores/StoreItem.store";
-import { Product, CartDrawerProps, CartState } from "@/constants/interfaces";
+import { CartDrawerState, CartItems } from "@/stores/StoreItem.store";
+import { UserInformation } from "@/stores/UserInfo.store";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import {
+  Box,
+  Drawer,
+  List,
+  Divider,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Button
+} from "@mui/material";
 
-const fetchData: Product[] = [
-  {
-    title: "Product 1",
-    image: "/assets/product1.png",
-    price: 100,
-    description: "Product 1 description",
-  },
-  {
-    title: "Product 2",
-    image: "/assets/product2.png",
-    price: 100,
-    description: "Product 2 description",
-  },
-  {
-    title: "Product 3",
-    image: "/assets/product3.png",
-    price: 100,
-    description: "Product 3 description",
-  },
-];
 
-const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
-  const [cart, setCart] = useAtom(cartAtom);
-  const [totalQuantity] = useAtom(totalQuantityAtom);
+const CartDrawer = () => {
+
+  const [userInformation] = useAtom(UserInformation)
+  const [cartDrawerState, setCartDrawerState] = useAtom(CartDrawerState)
+  const [, setCart] = useState([]);
+  const [cartItems, setCartItemsAtom] = useAtom(CartItems);
+  const [totalQuantity, setTotalQuantity] = useState<number>();
+  const [totalPrice, setTotalPrice] = useState<number>();
+  const router = useRouter()
 
   useEffect(() => {
-    if (cart.quantities.length === 0) {
-      setCart({
-        quantities: fetchData.map(() => 1),
-        checked: fetchData.map(() => false),
-      });
-    }
-  }, [setCart, cart.quantities.length]);
 
-  const handleQuantityChange = (index: number, change: number) => {
-    const newQuantities = [...cart.quantities];
-    newQuantities[index] = Math.max(0, newQuantities[index] + change);
-    setCart({ ...cart, quantities: newQuantities });
-  };
+    const fetchCartItems = async () => {
+      try {
+        const response = await fetch(`/api/ecommerce/usercart/${userInformation._id}`);
+        const data = await response.json();
 
-  const handleItemChange =
-    (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      const newChecked = [...cart.checked];
-      newChecked[index] = event.target.checked;
-      setCart({ ...cart, checked: newChecked });
+        setCartItemsAtom(data.cartItems);
+        setCart(data)
+
+        calculateTotalQty();
+        calculateTotalPrice();
+
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
 
-  const handleParentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newChecked = cart.checked.map(() => event.target.checked);
-    setCart({ ...cart, checked: newChecked });
+    if (cartDrawerState) {
+      fetchCartItems();
+    }
+
+  }, [cartDrawerState]);
+
+  useEffect(() => { calculateTotalQty(); calculateTotalPrice(); }, [cartItems])
+
+  const handleQuantityChange = (index: number, change: number) => {
+    const cartItem = cartItems[index];
+    const newQty = Math.max(0, cartItem.qty + change);
+
+    setCartItemsAtom(prevCartItems => {
+
+      if (newQty === 0) {
+        return prevCartItems.filter((_, i) => i !== index);
+      }
+
+      const updatedCartItems = [...prevCartItems];
+      updatedCartItems[index] = { ...cartItem, qty: newQty };
+      return updatedCartItems;
+    });
   };
 
-  const totalPrice = fetchData.reduce((total, item, index) => {
-    return cart.checked[index]
-      ? total + item.price * cart.quantities[index]
-      : total;
-  }, 0);
+  const calculateTotalQty = () => {
+    const totalQty = cartItems && cartItems.reduce((acc, item) => acc + item.qty, 0) || 0;
+    setTotalQuantity(totalQty)
+  }
+
+  const calculateTotalPrice = () => {
+    const totalPrc = cartItems && cartItems.reduce((acc, item) => acc + (item.price * item.qty), 0) || 0;
+    setTotalPrice(totalPrc)
+  }
+
+  const toggleCart = () => {
+    setCartDrawerState(!cartDrawerState)
+  }
+
+  const handleProceedCheckout = async () => {
+
+    const userId = userInformation._id
+
+    const response = await fetch(`/api/ecommerce/usercart`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId,
+        cartItems
+      }),
+    });
+
+    if (response.ok) {
+      router.push("/checkout")
+      setCartDrawerState(!false)
+    } else {
+      console.error('Failed to update cart:', response.statusText);
+    }
+  }
 
   const renderList = () => (
-    <Box sx={{ width: 400 }} role="presentation">
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          p: 2,
-          color: "white",
-          bgcolor: "#808080",
-          width: "100%",
-        }}
-      >
+
+    <Box className="w-96" role="presentation">
+
+      <Box className="flex justify-start items-center p-5 text-white bg-gray-600 w-full">
         <ArrowBackIosNewIcon
-          onClick={onClose}
-          sx={{
-            cursor: "pointer",
-            color: "white",
-          }}
+          onClick={toggleCart}
+          className="cursor-pointer text-white"
         />
+
         <Box className="flex w-full justify-center">
-          <h1 className="flex text-center">Cart</h1>
+          <h1 className="text-center font-light">Shopping Cart</h1>
         </Box>
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "flex-start", p: 2 }}>
-        <FormControlLabel
-          label="Select All"
-          control={
-            <Checkbox
-              checked={cart.checked.every(Boolean)}
-              indeterminate={
-                cart.checked.some(Boolean) && !cart.checked.every(Boolean)
-              }
-              onChange={handleParentChange}
-            />
-          }
-        />
-      </Box>
+
+      <Divider />
 
       <List>
-        {fetchData.map((item, index) => (
-          <React.Fragment key={index}>
+        {cartItems && cartItems.length > 0 && cartItems.map((item) => (
+          <React.Fragment key={item.name}>
             <ListItem component="div">
               <ListItemIcon>
-                <Checkbox
-                  checked={cart.checked[index]}
-                  onChange={handleItemChange(index)}
-                  color="primary"
-                />
-              </ListItemIcon>
-              <ListItemIcon>
                 <img
-                  src={item.image}
-                  alt={item.title}
-                  style={{ width: 50, height: 50 }}
+                  src={item.imgUrl}
+                  alt={item.name}
+                  className="w-20 h-20 mr-5"
                 />
               </ListItemIcon>
               <Box>
-                <ListItemText primary={item.title} />
-                <ListItemText primary={`$${item.price}`} />
-                <ListItemText primary={item.description} />
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <Button onClick={() => handleQuantityChange(index, -1)}>
-                    -
-                  </Button>
-                  <Box sx={{ mx: 2 }}>{cart.quantities[index]}</Box>
-                  <Button onClick={() => handleQuantityChange(index, 1)}>
-                    +
-                  </Button>
+                <ListItemText primary={item.name} />
+                <ListItemText primary={`₱${item.price}`} />
+                <Box className="flex items-center">
+                  <Button onClick={() => handleQuantityChange(item.id, -1)}>-</Button>
+                  <Box className="mx-2">{item.qty}</Box>
+                  <Button onClick={() => handleQuantityChange(item.id, 1)}>+</Button>
                 </Box>
               </Box>
             </ListItem>
-            {index < fetchData.length - 1 && <Divider />}
+
+            {/* Only render divider if it's not the last item */}
+            {cartItems.indexOf(item) < cartItems.length - 1 && <Divider />}
           </React.Fragment>
         ))}
       </List>
-
       <Divider />
-      <Box sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
+
+      <Box className="flex justify-between p-5">
         <ListItemText primary="Total Quantity" />
         <ListItemText primary={totalQuantity} />
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
+
+      <Box className="flex justify-between px-5 gap-0">
         <ListItemText primary="Total Price" />
-        <ListItemText primary={`$${totalPrice.toFixed(2)}`} />
+        <ListItemText primary={`₱${totalPrice}`} />
       </Box>
-      <Button variant="contained" color="primary" sx={{ m: 2 }}>
-        Checkout
-      </Button>
+
+      <Box className="flex justify-end p-5">
+        <Button variant="contained" color="primary" onClick={handleProceedCheckout}>
+          Proceed Checkout
+        </Button>
+      </Box>
+
     </Box>
+
   );
 
   return (
-    <Drawer anchor="right" open={open} onClose={onClose}>
+    <Drawer anchor="right" open={cartDrawerState} onClose={toggleCart}>
       {renderList()}
     </Drawer>
   );

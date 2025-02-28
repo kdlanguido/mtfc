@@ -1,29 +1,30 @@
 "use client";
 import React from "react";
 import { Button } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 interface JoinNowButtonProps {
     href?: string;
     size?: "small" | "medium" | "large";
     variant?: "text" | "outlined" | "contained";
     children: React.ReactNode;
-    onClick?: () => void;
 }
 
 const JoinNowButton: React.FC<JoinNowButtonProps> = ({
-    href = "",
-    // size = "small",
     variant = "contained",
     children,
-    onClick,
 }) => {
+
+    const router = useRouter();
+
+    const handleClickJoinNow = () => {
+        router.push("/pricing")
+    }
+
     return (
         <Button
-            component="a"
-            href={href}
-            // size={size}
             variant={variant}
-            onClick={onClick}
+            onClick={handleClickJoinNow}
             sx={{
                 backgroundColor: "#1689DF",
                 color: "white",

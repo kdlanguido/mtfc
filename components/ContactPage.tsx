@@ -9,24 +9,29 @@ import {
   Alert,
 } from "@mui/material";
 import React, { useState } from "react";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Image from "next/image";
 import PhoneNumberInput from "./PhoneNumberInput";
 import ContactConfirmation from "./ContactConfirmation";
 
 function ContactPage() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [subject, setSubject] = useState("");
-  const [message, setMessage] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    subject: "",
+    message: "",
+    phoneNumber: "",
+  });
+
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const handleSubmit = () => {
+
+  const handleSubmit = async () => {
+    const { fullName, email, subject, message, phoneNumber } = formData;
+
     if (
-      name.trim() === "" ||
+      fullName.trim() === "" ||
       email.trim() === "" ||
       subject.trim() === "" ||
       message.trim() === "" ||
@@ -37,10 +42,22 @@ function ContactPage() {
       return;
     }
 
-    setError(false);
-    setSuccess(true);
-    setOpenModal(true);
-    setOpenSnackbar(true);
+    const response = await fetch('/api/contactus', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.status === 201) {
+      setError(false);
+      setSuccess(true);
+      setOpenModal(true);
+      setOpenSnackbar(true);
+    } else {
+      alert('Server error! Contact admin')
+    }
   };
 
   const resetError = () => {
@@ -52,14 +69,19 @@ function ContactPage() {
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);
   };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+    resetError();
+  };
+
   return (
-    <Box sx={{ background: "white", height: "100vh" }}>
-      <Box sx={{ padding: "10px" }}>
-        <ArrowBackIcon sx={{ color: "black", height: 45, width: 48 }} />
-      </Box>
-      <Box
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-      >
+    <Box className="bg-white-100 h-screen">
+      <Box className="flex justify-center items-center my-5">
         <Image src={"/assets/logo.png"} height={200} width={200} alt="logo" />
       </Box>
       <Box
@@ -75,11 +97,9 @@ function ContactPage() {
         <TextField
           label="Name"
           variant="outlined"
-          value={name}
-          onChange={(e) => {
-            setName(e.target.value);
-            resetError();
-          }}
+          name="fullName"
+          value={formData.fullName}
+          onChange={handleInputChange}
           sx={{
             width: 630,
             height: 45,
@@ -96,17 +116,15 @@ function ContactPage() {
               },
             },
           }}
-          error={error && name.trim() === ""}
-          helperText={error && name.trim() === "" ? "Name is required" : ""}
+          error={error && formData.fullName.trim() === ""}
+          helperText={error && formData.fullName.trim() === "" ? "Name is required" : ""}
         />
         <TextField
           label="Email"
           variant="outlined"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            resetError();
-          }}
+          name="email"
+          value={formData.email}
+          onChange={handleInputChange}
           sx={{
             width: 630,
             height: 45,
@@ -122,17 +140,15 @@ function ContactPage() {
               },
             },
           }}
-          error={error && email.trim() === ""}
-          helperText={error && email.trim() === "" ? "Email is required" : ""}
+          error={error && formData.email.trim() === ""}
+          helperText={error && formData.email.trim() === "" ? "Email is required" : ""}
         />
         <TextField
           label="Subject"
           variant="outlined"
-          value={subject}
-          onChange={(e) => {
-            setSubject(e.target.value);
-            resetError();
-          }}
+          name="subject"
+          value={formData.subject}
+          onChange={handleInputChange}
           sx={{
             width: 630,
             height: 45,
@@ -148,29 +164,29 @@ function ContactPage() {
               },
             },
           }}
-          error={error && subject.trim() === ""}
-          helperText={
-            error && subject.trim() === "" ? "Subject is required" : ""
-          }
+          error={error && formData.subject.trim() === ""}
+          helperText={error && formData.subject.trim() === "" ? "Subject is required" : ""}
         />
         <PhoneNumberInput
-          value={phoneNumber}
+          name="phoneNumber"
+          value={formData.phoneNumber}
           onChange={(value) => {
-            setPhoneNumber(value);
+            setFormData((prevData) => ({
+              ...prevData,
+              phoneNumber: value,
+            }));
             resetError();
           }}
-          error={error && phoneNumber.trim() === ""}
+          error={error && formData.phoneNumber.trim() === ""}
         />
         <TextField
           label="Message"
           variant="outlined"
           multiline
           rows={10}
-          value={message}
-          onChange={(e) => {
-            setMessage(e.target.value);
-            resetError();
-          }}
+          name="message"
+          value={formData.message}
+          onChange={handleInputChange}
           sx={{
             width: 630,
             "& .MuiOutlinedInput-root": {
@@ -185,10 +201,8 @@ function ContactPage() {
               },
             },
           }}
-          error={error && message.trim() === ""}
-          helperText={
-            error && message.trim() === "" ? "Message is required" : ""
-          }
+          error={error && formData.message.trim() === ""}
+          helperText={error && formData.message.trim() === "" ? "Message is required" : ""}
         />
         {error && (
           <Typography color="error" sx={{ mt: 2 }}>

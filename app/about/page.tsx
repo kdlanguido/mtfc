@@ -1,15 +1,14 @@
 "use client";
 import { Box, Typography, Stack } from "@mui/material";
-import Header from "@/components/Header";
 import Parallax from "@/components/Parallax";
 import SectionStack from "@/components/SectionStack";
 import JoinNowButton from "@/components/JoinNowBtn";
 import { ParallaxBanner } from "react-scroll-parallax";
 
 export default function About() {
+
     return (
         <>
-            <Header />
             <Parallax>
                 <ParallaxBanner
                     layers={[{ image: "/assets/about-image.png", speed: -30 }]}

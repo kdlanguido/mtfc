@@ -1,10 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
+import ReactDOMServer from "react-dom/server";
 import Link from "next/link";
 import { Box, Button, Input, Typography } from "@mui/joy";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { changePassword } from "@/services/User.service";
+import { SaveForgotPasswordCode, SendForgotPasswordEmail } from "@/services/Email.service";
+import { ForgotPasswordEmailTemplate } from "@/components/ForgotPasswordEmailTemplate";
+import { EmailInfoI } from "@/constants/interfaces";
+import { randomCode } from "@/constants/vercodes.storage";
+import ForgotPasswordNewPassword from "@/components/ForgotPasswordNewPassword";
 
 const ForgotPasswordForm = () => {
   const router = useRouter();
@@ -38,16 +45,61 @@ const ForgotPasswordForm = () => {
     setVerificationCode(e.target.value);
   };
 
-  const handleSendCode = () => {
-    setStep(2);
+  const handleSendCode = async () => {
+    try {
+
+      const generatedRandomCode = randomCode()
+
+      const emailInfo: EmailInfoI = {
+        to: "alyastubigman@gmail.com",
+        subject: "Forgot Password Email Notification",
+        html: ReactDOMServer.renderToString(<ForgotPasswordEmailTemplate randomCode={generatedRandomCode} />)
+      }
+
+      const res1 = await SaveForgotPasswordCode(email, generatedRandomCode)
+
+      if (!res1?.ok) {
+        console.log("error")
+      }
+      else {
+        // const res = await SendForgotPasswordEmail(emailInfo, generatedRandomCode)
+
+        // if (res?.ok) {
+        //   setStep(2);
+        // }
+      }
+
+
+      setStep(2);
+
+    } catch (error) {
+      console.log("Error sending email")
+    }
   };
 
   const handleVerifyCode = () => {
     setStep(3);
   };
 
-  const handleConfirmChangePassword = () => {
-    router.push("/login");
+  const handleConfirmChangePassword = async () => {
+    try {
+
+      const response = await changePassword(email, newPassword);
+
+      if (response.status === 200) {
+
+        router.push('/login');
+
+      } else {
+
+        console.log('Error changing password:', response.message);
+
+      }
+    } catch (error) {
+
+      console.error('Error during password change:', error);
+
+    }
   };
 
   const renderStep1 = () => (
@@ -61,7 +113,7 @@ const ForgotPasswordForm = () => {
         className="!mb-3 !text-center text-stone-900 font-light"
         level="body-xs"
       >
-        Enter your email address below, and we’ll send you a link to reset your
+        Enter your email address below, and we&apos;ll send you a link to reset your
         password. Make sure to check your inbox (and spam folder) for the email.
       </Typography>
 
@@ -125,43 +177,22 @@ const ForgotPasswordForm = () => {
     </Box>
   );
 
-  const renderStep3 = () => (
-    <Box className="w-full flex flex-col items-center bg-white p-10">
-      <Image src={"/assets/lock.png"} width={40} height={40} alt={""} />
-      <Typography className="!my-2 !text-center text-stone-900" level="h4">
-        Enter your New Password
-      </Typography>
-
-      <Input
-        placeholder="Enter your new password"
-        className="p-3 my-1 text-center w-full"
-        value={newPassword}
-        onChange={handleChangeNewPassword}
-      />
-
-      <Input
-        placeholder="Confirm your new password"
-        className="p-3 my-1 text-center w-full"
-        value={newPasswordMatch}
-        onChange={handleChangeNewPasswordMatch}
-      />
-
-      <Button
-        variant="soft"
-        color="neutral"
-        className="!text-stone-900 w-full mt-2 mb-3"
-        onClick={handleConfirmChangePassword}
-      >
-        Confirm
-      </Button>
-    </Box>
-  );
-
   return (
     <>
+
       {step === 1 && renderStep1()}
+
       {step === 2 && renderStep2()}
-      {step === 3 && renderStep3()}
+
+      {step === 3 &&
+        <ForgotPasswordNewPassword
+          newPassword={newPassword}
+          newPasswordMatch={newPasswordMatch}
+          handleChangeNewPassword={handleChangeNewPassword}
+          handleChangeNewPasswordMatch={handleChangeNewPasswordMatch}
+          handleConfirmChangePassword={handleConfirmChangePassword}
+        />
+      }
     </>
   );
 };

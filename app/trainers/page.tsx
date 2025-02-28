@@ -7,7 +7,6 @@ import React from "react";
 function page() {
   return (
     <div style={{ margin: 0, padding: 0 }}>
-      <Header />
       <Trainers />
       <CenterNavBar />
       <Footer />

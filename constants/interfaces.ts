@@ -21,10 +21,13 @@ export interface LoginI {
 }
 
 export interface UserInformationI {
+  _id: string;
   email: string;
   profileUrl: string;
   userType: string;
   fullName: string;
+  fitnessGoal: string;
+  gender: string;
 }
 
 export interface NavLinksI {
@@ -46,11 +49,13 @@ export interface PhoneNumberInputProps {
   value: string;
   onChange: (value: string) => void;
   error: boolean;
+  name: string;
 }
 
-export interface Product {
-  title: string;
-  image: string;
+export interface ProductI {
+  _id: string;
+  name: string;
+  imgUrl: string;
   price: number;
   description: string;
 }
@@ -65,6 +70,19 @@ export interface CartState {
   checked: boolean[];
 }
 
+export interface EmailInfoI {
+  to: string;
+  subject: string;
+  html: string;
+}
+
+export interface ForgotPasswordNewPasswordI {
+  newPassword: string;
+  newPasswordMatch: string;
+  handleChangeNewPassword: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangeNewPasswordMatch: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleConfirmChangePassword: () => void;
+}
 
 export interface ButtonI {
   style: string;
@@ -72,3 +90,16 @@ export interface ButtonI {
   title: string;
 }
 
+export interface CartItemsI {
+  name: string,
+  price: number,
+  qty: number,
+  imgUrl: string
+}
+
+export interface PricingI {
+  _id: string;
+  name: string;
+  inclusions: [string];
+  price: number;
+}

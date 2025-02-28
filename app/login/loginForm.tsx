@@ -33,7 +33,6 @@ export default function LoginForm() {
       const data = await response.json();
 
       if (response.status === 200) {
-
         setUser(data.user)
         setIsUserAuthenticated(true)
         router.push("/")
