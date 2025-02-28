@@ -2,7 +2,14 @@
 
 import { useAtom } from "jotai";
 import { IsUserAuthenticated, UserInformation } from "@/stores/UserInfo.store";
-import { Box, List, ListItem, ListItemButton, ListItemContent, ListItemDecorator } from "@mui/joy";
+import {
+  Box,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemContent,
+  ListItemDecorator,
+} from "@mui/joy";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { FaBell, FaCartShopping, FaLock, FaUser } from "react-icons/fa6";
@@ -20,6 +27,7 @@ const Header = () => {
   const [isUserAuthenticated, setIsUserAuthenticated] = useAtom(IsUserAuthenticated);
   const [userInformation, setUserInformation] = useAtom(UserInformation);
   const [myProfileModalState, setMyProfileModalState] = useAtom(MyProfileModalState)
+
   const [isMounted, setIsMounted] = useState(false);
   const [userDropdownIsOpen, setUserDropdownIsOpen] = useState(false);
 
@@ -28,9 +36,12 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    if (isMounted && typeof window !== 'undefined') {
-      localStorage.setItem('IsUserAuthenticated', JSON.stringify(isUserAuthenticated));
-      localStorage.setItem('UserInformation', JSON.stringify(userInformation));
+    if (isMounted && typeof window !== "undefined") {
+      localStorage.setItem(
+        "IsUserAuthenticated",
+        JSON.stringify(isUserAuthenticated)
+      );
+      localStorage.setItem("UserInformation", JSON.stringify(userInformation));
     }
   }, [isUserAuthenticated, isMounted, userInformation]);
 
@@ -72,7 +83,9 @@ const Header = () => {
           {NavLinks.map((link) => (
             <ListItem key={link.label} className="font-semibold text-center px-5">
               <ListItemButton component="a" href={link.url}>
-                <ListItemContent className="text-zinc-50">{link.label}</ListItemContent>
+                <ListItemContent className="text-zinc-50">
+                  {link.label}
+                </ListItemContent>
               </ListItemButton>
             </ListItem>
           ))}
@@ -83,15 +96,13 @@ const Header = () => {
         <List component="nav" orientation="horizontal">
           {!isUserAuthenticated && (
             <ListItem>
-              <ListItemButton
-                variant="solid"
-                href="/login"
-                component="a"
-              >
+              <ListItemButton variant="solid" href="/login" component="a">
                 <ListItemDecorator>
                   <FaLock />
                 </ListItemDecorator>
-                <ListItemContent className="text-zinc-50">Login</ListItemContent>
+                <ListItemContent className="text-zinc-50">
+                  Login
+                </ListItemContent>
               </ListItemButton>
             </ListItem>
           )}
@@ -151,7 +162,6 @@ const Header = () => {
 
             </Box>
           )}
-
         </List>
       </Box>
     </Box>

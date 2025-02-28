@@ -18,6 +18,13 @@ export const totalQuantityAtom = atom((get) => {
   return quantities.reduce((acc, quantity) => acc + quantity, 0);
 });
 
+
+export const termsModalAtom = atom(false);
+
+export const cardModalAtom = atom(false);
+
+export const gcashModalAtom = atom(false);
+
 export const CartDrawerState = atom<boolean>(false)
 
 const storage = createJSONStorage<CartItemsI[]>(() => sessionStorage)
@@ -28,3 +35,4 @@ export const CartItems = atomWithStorage<CartItemsI[]>('cartItems', [{
   qty: 0,
   imgUrl: ""
 }], storage)
+
