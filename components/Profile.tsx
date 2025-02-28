@@ -1,7 +1,7 @@
 "use client"
 import { DefaultProfileImgUrl } from "@/constants/app";
 import { UserInformation } from "@/stores/UserInfo.store";
-import { Button, Divider, Typography } from "@mui/joy";
+import { Breadcrumbs, Button, Divider, Link, Typography } from "@mui/joy";
 import { useAtom } from "jotai";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -94,17 +94,35 @@ function Profile() {
 
       </div>
 
-      <div className="w-4/5 h-screen px-10 pt-10">
-        <div className="w-[500px] h-[310px]">
+      <div className="w-4/5 h-screen px-10 pt-5 bg-zinc-300">
+        <Breadcrumbs size="sm" className="pl-0 ml-0">
+          <Link href="/" color="neutral">Home</Link>
+          <Typography className="font-semibold text-black">Profile</Typography>
+        </Breadcrumbs>
+
+        <div className="!w-[550px] h-auto bg-white p-6 mb-5 rounded mt-2">
           <ChartSample />
         </div>
 
-        <div>
-          <div className="bg-[#235D83] p-5 rounded">
+        <div className="my-10 bg-white border rounded-lg ">
+          <div className="bg-[#235D83] p-5  rounded-t-lg">
             <Typography className="text-white">Membership Plan</Typography>
+          </div>
+
+          <div className="p-5">
+            <Typography>Membership Plan</Typography>
           </div>
         </div>
 
+        <div className="bg-white border rounded-lg ">
+          <div className="bg-[#235D83] p-5  rounded-t-lg">
+            <Typography className="text-white">Recurring Payments</Typography>
+          </div>
+
+          <div className="p-5">
+            <Typography>Membership Plan</Typography>
+          </div>
+        </div>
       </div>
 
     </div>

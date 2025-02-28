@@ -4,7 +4,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'],
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'June'],
     datasets: [
         {
             label: '',
