@@ -30,7 +30,6 @@ export default function Page({ params }: PageProps) {
 
   return (
     <>
-      <Header />
       <Box className="p-5">
         <StoreNavBreadCrumbs />
         Page for {id}

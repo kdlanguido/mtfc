@@ -1,14 +1,10 @@
+import { CartItemsI } from "@/constants/interfaces";
 import { atom } from "jotai";
+import { atomWithStorage, createJSONStorage } from 'jotai/utils'
 
 export const ViewProductModalState = atom(false);
 
 export const ViewProductItemId = atom<string>("")
-
-
-
-
-
-
 
 export const selectedNavItemAtom = atom<string | null>("Gym");
 
@@ -22,7 +18,13 @@ export const totalQuantityAtom = atom((get) => {
   return quantities.reduce((acc, quantity) => acc + quantity, 0);
 });
 
-
 export const CartDrawerState = atom<boolean>(false)
 
-export const CartItems = atom<[]>
+const storage = createJSONStorage<CartItemsI[]>(() => sessionStorage)
+
+export const CartItems = atomWithStorage<CartItemsI[]>('cartItems', [{
+  name: "",
+  price: 0,
+  qty: 0,
+  imgUrl: ""
+}], storage)

@@ -26,6 +26,8 @@ export interface UserInformationI {
   profileUrl: string;
   userType: string;
   fullName: string;
+  fitnessGoal: string;
+  gender: string;
 }
 
 export interface NavLinksI {
@@ -47,6 +49,7 @@ export interface PhoneNumberInputProps {
   value: string;
   onChange: (value: string) => void;
   error: boolean;
+  name: string;
 }
 
 export interface ProductI {
@@ -85,4 +88,18 @@ export interface ButtonI {
   style: string;
   onClick: () => void;
   title: string;
+}
+
+export interface CartItemsI {
+  name: string,
+  price: number,
+  qty: number,
+  imgUrl: string
+}
+
+export interface PricingI {
+  _id: string;
+  name: string;
+  inclusions: [string];
+  price: number;
 }

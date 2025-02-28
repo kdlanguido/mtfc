@@ -9,7 +9,6 @@ import {
   Alert,
 } from "@mui/material";
 import React, { useState } from "react";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Image from "next/image";
 import PhoneNumberInput from "./PhoneNumberInput";
 import ContactConfirmation from "./ContactConfirmation";
@@ -82,12 +81,7 @@ function ContactPage() {
 
   return (
     <Box className="bg-white-100 h-screen">
-      <Box sx={{ padding: "10px" }}>
-        <ArrowBackIcon sx={{ color: "black", height: 45, width: 48 }} />
-      </Box>
-      <Box
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-      >
+      <Box className="flex justify-center items-center my-5">
         <Image src={"/assets/logo.png"} height={200} width={200} alt="logo" />
       </Box>
       <Box

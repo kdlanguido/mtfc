@@ -6,18 +6,22 @@ import { Box, List, ListItem, ListItemButton, ListItemContent, ListItemDecorator
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { FaBell, FaCartShopping, FaLock, FaUser } from "react-icons/fa6";
-import { NavLinks } from "@/constants/app";
+import { DefaultProfileImgUrl, NavLinks } from "@/constants/app";
 import { FaCog, FaSignOutAlt } from "react-icons/fa";
 import { CartDrawerState } from "@/stores/StoreItem.store";
+import { useRouter } from "next/navigation";
+import { Divider } from "@mui/material";
+import { MyProfileModalState } from "@/stores/App.store";
 
 const Header = () => {
 
+  const router = useRouter();
   const [cartDrawerState, setCartDrawerState] = useAtom(CartDrawerState)
-  const [isUserAuthenticated,] = useAtom(IsUserAuthenticated);
-  const [userInformation,] = useAtom(UserInformation);
+  const [isUserAuthenticated, setIsUserAuthenticated] = useAtom(IsUserAuthenticated);
+  const [userInformation, setUserInformation] = useAtom(UserInformation);
+  const [myProfileModalState, setMyProfileModalState] = useAtom(MyProfileModalState)
   const [isMounted, setIsMounted] = useState(false);
   const [userDropdownIsOpen, setUserDropdownIsOpen] = useState(false);
-  const [userDropdownMyProfileIsOpen, setUserDropdownMyProfileIsOpen] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -43,10 +47,14 @@ const Header = () => {
   };
 
   const toggleUserDropdownMyProfileIsOpen = () => {
+    setMyProfileModalState(true)
     setUserDropdownIsOpen(!userDropdownIsOpen);
   };
 
   const toggleUserDropdownLogout = () => {
+    setIsUserAuthenticated(false)
+    setUserInformation(null)
+    router.push('/login')
   };
 
   return (
@@ -114,8 +122,19 @@ const Header = () => {
                 </ListItemButton>
 
                 {userDropdownIsOpen && (
-                  <Box className="absolute bg-white shadow-lg rounded-lg p-2 right-0 w-40" sx={{ marginTop: 17, zIndex: 1 }}>
+                  <Box className="absolute bg-white shadow-lg rounded-lg right-0 w-40 text-[11px] p-1 !mt-[190px] z-10">
                     <ul>
+                      <li className="flex flex-col align-center items-center px-2 pt-3 pb-1 w-full">
+                        <Image
+                          alt={""}
+                          src={userInformation.profileUrl ? userInformation.profileUrl : DefaultProfileImgUrl}
+                          height={40}
+                          width={40}
+                          className="rounded-full !w-[50px] !h-[50px] !object-cover mb-2"
+                        />
+                        <span className=" text-center">Hello, <b>{userInformation.fullName}</b></span>
+                        <Divider />
+                      </li>
                       <li onClick={toggleUserDropdownMyProfileIsOpen} className="flex items-center space-x-2 p-2 hover:bg-gray-200 cursor-pointer">
                         <FaCog className="text-gray-500" />
                         <span>My Profile</span>

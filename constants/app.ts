@@ -26,3 +26,5 @@ export const NavLinks: NavLinksI[] = [
         url: "/contact-us"
     }
 ];
+
+export const DefaultProfileImgUrl = "https://res.cloudinary.com/dlobngrjy/image/upload/v1740755565/user-icon-on-transparent-background-free-png_t6yn4k.webp"

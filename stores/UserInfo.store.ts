@@ -7,7 +7,16 @@ const LOCAL_STORAGE_USER_KEY = 'UserInformation';
 
 const getPersistedUserInformation = (): UserInformationI => {
 
-    const emptyUserInfo = { _id: "", email: "", password: "", profileUrl: "", userType: "", fullName: "" }
+    const emptyUserInfo = {
+        _id: "",
+        email: "",
+        password: "",
+        profileUrl: "",
+        userType: "",
+        fullName: "",
+        gender: "",
+        fitnessGoal: ""
+    }
 
     if (typeof window === 'undefined') return emptyUserInfo;
 

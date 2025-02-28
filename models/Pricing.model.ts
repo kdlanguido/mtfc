@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
 interface Pricing extends Document {
+    _id: string;
     name: string;
     inclusions: string[];
     price: Number;
@@ -8,6 +9,7 @@ interface Pricing extends Document {
 }
 
 const priceSchema = new Schema<Pricing>({
+    _id: { type: String, required: true },
     name: { type: String, required: true },
     inclusions: { type: [String], required: true },
     price: { type: Number, required: true },

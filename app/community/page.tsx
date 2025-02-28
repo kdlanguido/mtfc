@@ -58,7 +58,6 @@ const CommunityDashboard = () => {
 
     return (
         <>
-            <Header />
             <Stack direction={{ xs: "column", md: "row" }}>
                 <Sidebar />
                 <Box
@@ -78,7 +77,7 @@ const CommunityDashboard = () => {
                         ))}
                     </Stack>
                 </Box>
-                
+
                 <ChatBox chatOpen={chatOpen} toggleChat={toggleChat} />
                 <Box
                     sx={{

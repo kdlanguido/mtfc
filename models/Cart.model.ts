@@ -4,12 +4,14 @@ interface CartItem {
     name: string;
     price: number;
     qty: number;
+    imgUrl: string;
 }
 
 const cartItemSchema = new Schema<CartItem>({
     name: { type: String, required: true },
     price: { type: Number, required: true },
     qty: { type: Number, required: true },
+    imgUrl: { type: String, required: false },
 });
 
 interface Cart extends Document {

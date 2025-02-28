@@ -10,8 +10,12 @@ import {
   Option,
 } from "@mui/joy";
 import { SignUpFormI } from "@/constants/interfaces";
+import { useRouter } from "next/navigation";
 
 export default function SignUpForm() {
+
+  const router = useRouter();
+
   const [signUpInput, setSignUpInput] = useState<SignUpFormI>({
     firstName: "",
     lastName: "",
@@ -42,7 +46,7 @@ export default function SignUpForm() {
     const userData = {
       email: signUpInput.email,
       password: signUpInput.password,
-      fullName: signUpInput.firstName + signUpInput.lastName,
+      fullName: signUpInput.firstName + " " + signUpInput.lastName,
       gender: signUpInput.gender,
       fitnessGoal: signUpInput.fitnessGoal
     };
@@ -60,6 +64,7 @@ export default function SignUpForm() {
 
       if (response.ok) {
         alert('Sign-up Successful')
+        router.push('/login')
       } else {
         console.error("Error:", data.message);
       }
@@ -120,8 +125,9 @@ export default function SignUpForm() {
           }));
         }}
       >
-        <Option value="Item 1">Item 1</Option>
-        <Option value="Item 2">Item 2</Option>
+        <Option value="lose-weight">Lose Weight</Option>
+        <Option value="build-muscle">Build Muscle</Option>
+        <Option value="maintain">Maintain</Option>
       </Select>
 
       <Input

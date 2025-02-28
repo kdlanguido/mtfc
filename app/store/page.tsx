@@ -9,7 +9,6 @@ import TopRatedItems from "@/components/TopRatedItems";
 export default function page() {
   return (
     <Box>
-      <Header />
       <StoreBanner src={"/assets/hero.png"} />
       <StoreItems />
       <StoreBanner src={"/assets/image 98.png"} />
