@@ -1,3 +1,5 @@
+import mongoose, { Types } from "mongoose";
+
 export interface SignUpFormI {
   firstName: string;
   lastName: string;
@@ -33,6 +35,12 @@ export interface UserInformationI {
 export interface NavLinksI {
   label: string;
   url: string;
+}
+
+export interface AdminNavLinksI {
+  label: string;
+  url: string;
+  imgUrl: string;
 }
 
 export interface GymInfoI {
@@ -102,4 +110,74 @@ export interface PricingI {
   name: string;
   inclusions: [string];
   price: number;
+}
+
+export interface GymEquipmentI {
+  _id: string;
+  name: string,
+  description: string,
+  price: number,
+  datePurchased: string,
+  qty: number,
+  vendorDetails: {
+    name: string,
+    contactNumber: string,
+    address: string,
+  },
+
+}
+
+export interface SubscriptionI extends Document {
+  subscriptionStatus: string;
+  subscriptionEnd: Date;
+  subscriptionStart: Date;
+  subscriptionType: string;
+  subscriptionName: string;
+  qrCodeUrl: string;
+}
+
+export interface AttendanceI extends Document {
+  timeIn: string;
+  timeOut: Date;
+  date: Date;
+  status: string;
+}
+
+export interface IUser extends Document {
+  email?: string;
+  password?: string;
+  profileUrl?: string;
+  userType?: string;
+  fullName?: string;
+  gender?: string;
+  fitnessGoal?: string;
+  subscriptionInformation?: SubscriptionI;
+  attendanceInformation?: AttendanceI;
+}
+
+export interface SessionsI {
+  userId: string;
+  fullName: string;
+  time: string;
+  date: Date;
+  status: string;
+}
+
+export interface SessionClientI {
+  _id: string,
+  fullName: string,
+}
+
+export interface TrainerI extends Document {
+  _id: string;
+  profileUrl: string;
+  fullName: string;
+  gender: string;
+  email: string;
+  phone: string;
+  shortIntro: string;
+  instructorSchedule: string;
+  hourlyRate: number;
+  specialization: string;
+  instructorFor: string;
 }

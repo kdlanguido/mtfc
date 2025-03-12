@@ -4,11 +4,12 @@ import React from 'react'
 import Header from './Header';
 
 const HeaderContainer = () => {
+
     const pathname = usePathname();
 
     return (
         <>
-            {pathname !== '/profile' && <Header />}
+            {(pathname !== '/profile' && !pathname.startsWith("/admin")) && <Header />}
         </>
     )
 }

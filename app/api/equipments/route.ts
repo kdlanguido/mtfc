@@ -1,4 +1,4 @@
-import Product from "@/models/Product.model";
+import Equipment from "@/models/Equipment.model";
 import connectDb from "@/lib/mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -6,16 +6,16 @@ export async function GET() {
   try {
 
     await connectDb();
-    const product = await Product.find();
+    const equipments = await Equipment.find();
 
-    if (!product) {
+    if (!equipments) {
       return new Response(
-        JSON.stringify({ message: "Product not found" }),
+        JSON.stringify({ message: "Equipments not found" }),
         { status: 404, headers: { "Content-Type": "application/json" } }
       );
     }
 
-    return new Response(JSON.stringify(product), {
+    return new Response(JSON.stringify(equipments), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
@@ -27,20 +27,35 @@ export async function GET() {
 
 export async function PUT(req: NextRequest) {
   try {
-    const { name, description, price, imgUrl, _id } = await req.json();
+    const {
+      name,
+      description,
+      price,
+      _id,
+      datePurchased,
+      qty,
+      vendorDetails
+    } = await req.json();
 
     await connectDb();
 
-    if (!name || !description || !price || !imgUrl || !_id) {
+    if (!name || !description || !price || !_id || !datePurchased || !qty || !vendorDetails) {
       return NextResponse.json(
         { message: "All fields are required!" },
         { status: 400 }
       );
     }
 
-    const updatedProduct = await Product.findByIdAndUpdate(
+    const updatedProduct = await Equipment.findByIdAndUpdate(
       _id,
-      { name, description, price, imgUrl },
+      {
+        name,
+        description,
+        price,
+        datePurchased: new Date(datePurchased),
+        qty,
+        vendorDetails
+      },
       { new: true }
     );
 
@@ -62,32 +77,35 @@ export async function PUT(req: NextRequest) {
   }
 }
 
+
 export async function POST(req: NextRequest) {
   try {
-    const { name, description, price, imgUrl } = await req.json();
+    const { name, description, price, datePurchased, qty, vendorDetails } = await req.json();
 
     await connectDb();
 
-    if (!name || !description || !price || !imgUrl) {
+    if (!name || !description || !price || !vendorDetails) {
       return NextResponse.json(
         { message: "All fields are required!" },
         { status: 400 }
       );
     }
 
-    const newProduct = new Product({
+    const newEquipment = new Equipment({
       name,
       description,
       price,
-      imgUrl
+      datePurchased,
+      qty,
+      vendorDetails,
     });
 
-    const res = await newProduct.save();
+    const res = await newEquipment.save();
 
     return NextResponse.json(res, { status: 200 });
 
   } catch (error) {
-    console.error("Error in product creation API route:", error);
+    console.error("Error in equipment creation API route:", error);
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }

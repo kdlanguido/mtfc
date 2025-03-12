@@ -4,6 +4,7 @@ import "./globals.css";
 import CartDrawer from "@/components/CartDrawer";
 import MyProfileModal from "@/components/MyProfileModal";
 import HeaderContainer from "@/components/HeaderContainer";
+import "@uploadthing/react/styles.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
