@@ -1,16 +1,19 @@
-import { IUser, SubscriptionI } from '@/constants/interfaces';
-import mongoose, { Schema, Document, Types } from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose';
 
-
-const subscriptionSchema = new Schema<SubscriptionI>({
-    subscriptionName: { type: String, required: false },
-    subscriptionType: { type: String, required: false },
-    subscriptionStatus: { type: String, required: false },
-    subscriptionEnd: { type: Date, required: false },
-    subscriptionStart: { type: Date, required: false },
-    qrCodeUrl: { type: String, required: false }
-});
-
+export interface IUser extends Document {
+    _id: string;
+    email?: string;
+    password?: string;
+    profileUrl?: string;
+    userType?: string;
+    fullName?: string;
+    gender?: string;
+    fitnessGoal?: string;
+    subscriptions: Array<{
+        subscriptionId: mongoose.Types.ObjectId;
+        pricingId: mongoose.Types.ObjectId;
+    }>;
+}
 
 const userSchema = new Schema<IUser>({
     email: { type: String, required: false, unique: false },
@@ -20,7 +23,15 @@ const userSchema = new Schema<IUser>({
     fullName: { type: String, required: false },
     gender: { type: String, required: false },
     fitnessGoal: { type: String, required: false },
-    subscriptionInformation: { type: subscriptionSchema, required: false },
+    subscriptions: {
+        type: [
+            {
+                subscriptionId: { type: mongoose.Schema.Types.ObjectId, ref: 'Subscription' },
+                pricingId: { type: mongoose.Schema.Types.ObjectId, ref: 'Pricing' }
+            }
+        ],
+        default: []
+    }
 });
 
 const User = mongoose.models.User || mongoose.model<IUser>('User', userSchema);

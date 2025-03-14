@@ -4,94 +4,50 @@ import { useAtom } from "jotai";
 import { useState, useEffect } from "react";
 import { Box, Button, Card, FormLabel, Input, Typography, Select, Option } from "@mui/joy";
 import Image from "next/image";
-import { IUser, SubscriptionI, AttendanceI } from "@/constants/interfaces";
+import { IUser, PricingI, SubscriptionI } from "@/constants/interfaces";
 import { UploadButton } from "@/lib/uploadthing";
 import "@uploadthing/react/styles.css";
+import { formatDate } from "@/lib/date";
 
 export default function MemberModalEdit({ fetchMembers }) {
-  const [loading, setLoading] = useState<boolean>(true);
   const [memberModalStateEdit, setMemberModalStateEdit] = useAtom(MemberModalStateEdit);
-  const [selectedMember] = useAtom(SelectedMember);
+  const [selectedMember,] = useAtom(SelectedMember);
   const [selectedImage, setSelectedImage] = useState("");
-
-  const [updatedUserInformation, setUpdatedUserInformation] = useState<IUser>({
-    _id: selectedMember ? selectedMember._id : "",
-    email: selectedMember ? selectedMember.email : "",
-    password: "",
-    profileUrl: selectedMember ? selectedMember.profileUrl : "",
-    userType: "member",
-    fullName: selectedMember ? selectedMember.fullName : "",
-    gender: selectedMember ? selectedMember.gender : "",
-    fitnessGoal: selectedMember ? selectedMember.fitnessGoal : "",
-    subscriptionInformation: selectedMember
-      ? selectedMember.subscriptionInformation
-      : {
-        subscriptionStatus: "",
-        subscriptionEnd: new Date(),
-        subscriptionStart: new Date(),
-        subscriptionType: "",
-        subscriptionName: "",
-        qrCodeUrl: "",
-      },
-    attendanceInformation: selectedMember
-      ? selectedMember.attendanceInformation
-      : {
-        timeIn: "",
-        timeOut: new Date(),
-        date: new Date(),
-        status: "",
-      },
-  });
+  const [updatedUserInformation, setUpdatedUserInformation] = useState<IUser>();
+  const [pricings, setPricings] = useState<PricingI[]>();
+  const [membership, setMembership] = useState<SubscriptionI>();
 
   useEffect(() => {
-    if (selectedMember) {
-      setSelectedImage(selectedMember.profileUrl || "/default-img.png");
-      setUpdatedUserInformation({
-        _id: selectedMember._id,
-        email: selectedMember.email,
-        fullName: selectedMember.fullName,
-        profileUrl: selectedMember.profileUrl,
-        gender: selectedMember.gender,
-        fitnessGoal: selectedMember.fitnessGoal,
-        password: selectedMember.password || "",
-        userType: selectedMember.userType || "standard",
-        subscriptionInformation: selectedMember.subscriptionInformation || {
-          subscriptionStatus: "",
-          subscriptionEnd: new Date(),
-          subscriptionStart: new Date(),
-          subscriptionType: "",
-          subscriptionName: "",
-          qrCodeUrl: "",
-        },
-        attendanceInformation: selectedMember.attendanceInformation || {
-          timeIn: "",
-          timeOut: new Date(),
-          date: new Date(),
-          status: "",
-        },
-      });
-    }
+    fetchPricing()
+    fetchMembership()
+    setUpdatedUserInformation(selectedMember)
+
+    console.log(membership)
   }, [selectedMember]);
+
+  const fetchPricing = async () => {
+    const response = await fetch("/api/pricing/");
+    const data = await response.json();
+    setPricings(data)
+  }
+
+  const fetchMembership = async () => {
+    const response = await fetch(`/api/membership/${selectedMember?._id}`);
+    const data = await response.json();
+    setMembership(data)
+  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (name.startsWith("subscriptionInformation")) {
-      const updatedSubscriptionInformation = { ...updatedUserInformation.subscriptionInformation, [name]: value };
-      setUpdatedUserInformation((prev) => ({
-        ...prev,
-        subscriptionInformation: updatedSubscriptionInformation,
-      }));
-    } else {
-      setUpdatedUserInformation((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
+    setUpdatedUserInformation((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSaveChanges = async () => {
     try {
-      const response = await fetch(`/api/users/`, {
+      const response = await fetch(`/api/users/${updatedUserInformation._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -125,17 +81,17 @@ export default function MemberModalEdit({ fetchMembers }) {
       onClose={() => setMemberModalStateEdit(false)}
       className="flex justify-center items-center"
     >
-      <Card className="w-[450px]">
+      <Card className="w-[768px]">
         <Box>
           <Typography level="title-lg">Edit User Information</Typography>
         </Box>
         <Box className="mb-2">
           <Image
-            src={selectedImage || "/default-img.png"}
+            src={selectedImage || "/assets/imgplaceholder.jpg"}
             alt="user profile image"
-            height={300}
-            width={200}
-            className="w-[130] h-auto mb-2 mx-auto"
+            height={450}
+            width={450}
+            className="w-[330] h-auto mb-2 mx-auto"
           />
 
           <UploadButton
@@ -152,64 +108,108 @@ export default function MemberModalEdit({ fetchMembers }) {
           />
         </Box>
 
-        <Box className="w-full">
-          <FormLabel>Full Name</FormLabel>
-          <Input
-            className="mb-2"
-            value={updatedUserInformation.fullName}
-            name="fullName"
-            onChange={handleInputChange}
-          />
 
-          <FormLabel>Gender</FormLabel>
-          <Select
-            className="mb-2"
-            value={updatedUserInformation.gender}
-            name="gender"
-            onChange={handleInputChange}
-          >
-            <Option value="Male">Male</Option>
-            <Option value="Female">Female</Option>
-            <Option value="Other">Other</Option>
-          </Select>
+        <Box className="justify-between flex gap-8">
 
-          <FormLabel>Fitness Goal</FormLabel>
-          <Select
-            className="mb-2"
-            value={updatedUserInformation.fitnessGoal}
-            name="fitnessGoal"
-            onChange={handleInputChange}
-          >
-            <Option value="lose-weight">Lose Weight</Option>
-            <Option value="build-muscle">Build Muscle</Option>
-            <Option value="maintain">Maintain</Option>
-          </Select>
+          <Box className="w-full">
 
-          <Typography level="title-md" className="!mt-5 !mb-2">Subscription Information</Typography>
+            <Typography level="title-md" className="!text-gray-600 !mb-2">Personal Information</Typography>
 
-          <FormLabel>Subscription Status</FormLabel>
-          <Input
-            className="mb-2"
-            value={updatedUserInformation.subscriptionInformation?.subscriptionStatus || ""}
-            name="subscriptionStatus"
-            onChange={handleInputChange}
-          />
+            <FormLabel>Full Name</FormLabel>
+            <Input
+              className="mb-2"
+              value={updatedUserInformation?.fullName}
+              name="fullName"
+              onChange={handleInputChange}
+            />
 
-          <FormLabel>Subscription Type</FormLabel>
-          <Input
-            className="mb-2"
-            value={updatedUserInformation.subscriptionInformation?.subscriptionType || ""}
-            name="subscriptionType"
-            onChange={handleInputChange}
-          />
+            <FormLabel>Email</FormLabel>
+            <Input
+              className="mb-2"
+              value={updatedUserInformation?.email}
+              name="email"
+              onChange={handleInputChange}
+            />
 
-          <Box className="flex justify-end">
-            <Button className="ml-auto" onClick={handleSaveChanges}>
-              Save Changes
-            </Button>
+            <FormLabel>Gender</FormLabel>
+            <Select
+              className="mb-2"
+              value={updatedUserInformation?.gender}
+              name="fitnessGoal"
+              onChange={(i, newGender) => {
+                setUpdatedUserInformation((prev) => ({
+                  ...prev,
+                  gender: newGender
+                }))
+              }}
+            >
+              <Option value="Male">Male</Option>
+              <Option value="Female">Female</Option>
+            </Select>
+
+            <FormLabel>Fitness Goal</FormLabel>
+            <Select
+              className="mb-2"
+              value={updatedUserInformation?.fitnessGoal}
+              name="fitnessGoal"
+              onChange={handleInputChange}
+            >
+              <Option value="lose-weight">Lose Weight</Option>
+              <Option value="build-muscle">Build Muscle</Option>
+              <Option value="maintain">Maintain</Option>
+            </Select>
           </Box>
+
+          <Box className="w-full">
+            <Typography level="title-md" className="!text-gray-600 !mb-2">Membership Information</Typography>
+
+            <FormLabel>Package</FormLabel>
+            <Select
+              className="mb-2"
+              value={membership?.pricingId}
+              name="gender"
+              onChange={(i, value) => {
+                setUpdatedUserInformation((prev) => ({
+                  ...prev,
+                  gender: value,
+                }))
+              }}
+            >
+              {pricings.map((val, i) => (
+                <Option key={val._id} value={val._id}>{(val.sport).toUpperCase() + " - " + (val.name).toUpperCase()}</Option>
+              ))}
+            </Select>
+
+            <FormLabel>Date Started</FormLabel>
+            <Input
+              readOnly
+              className="mb-2"
+              value={membership?.startDate ? formatDate(membership.startDate.toString()) : ''}
+              name="email"
+              onChange={handleInputChange}
+            />
+
+            <FormLabel>Date End</FormLabel>
+            <Input
+              readOnly
+              className="mb-2"
+              value={membership?.endDate ? formatDate(membership.endDate.toString()) : ''}
+              name="email"
+              onChange={handleInputChange}
+            />
+
+
+          </Box>
+
         </Box>
+
+        <Box className="flex justify-end">
+          <Button className="ml-auto" onClick={handleSaveChanges}>
+            Save Changes
+          </Button>
+        </Box>
+
       </Card>
-    </Modal>
+    </Modal >
   );
 }

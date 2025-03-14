@@ -44,13 +44,16 @@ export interface AdminNavLinksI {
 }
 
 export interface GymInfoI {
-  name: string;
-  title: string;
-  description: string;
-  scheduleWeekDays: string;
-  scheduleWeekEnds: string;
-  imageUrl: string;
-  reverse: boolean;
+  profileUrl: string;
+  fullName: string;
+  gender: string;
+  email: string;
+  phone: string;
+  shortIntro: string;
+  instructorSchedule: string;
+  hourlyRate: number;
+  specialization: string;
+  instructorFor: string;
 }
 
 export interface PhoneNumberInputProps {
@@ -110,6 +113,7 @@ export interface PricingI {
   name: string;
   inclusions: [string];
   price: number;
+  sport: string;
 }
 
 export interface GymEquipmentI {
@@ -128,11 +132,13 @@ export interface GymEquipmentI {
 }
 
 export interface SubscriptionI extends Document {
-  subscriptionStatus: string;
-  subscriptionEnd: Date;
-  subscriptionStart: Date;
-  subscriptionType: string;
-  subscriptionName: string;
+  userId: string;
+  status: string;
+  endDate: Date;
+  startDate: Date;
+  type: string;
+  name: string;
+  pricingId: string;
   qrCodeUrl: string;
 }
 
@@ -143,17 +149,7 @@ export interface AttendanceI extends Document {
   status: string;
 }
 
-export interface IUser extends Document {
-  email?: string;
-  password?: string;
-  profileUrl?: string;
-  userType?: string;
-  fullName?: string;
-  gender?: string;
-  fitnessGoal?: string;
-  subscriptionInformation?: SubscriptionI;
-  attendanceInformation?: AttendanceI;
-}
+
 
 export interface SessionsI {
   userId: string;

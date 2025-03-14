@@ -35,3 +35,27 @@ export async function POST(request: NextRequest) {
         );
     }
 }
+
+export async function GET(request: Request) {
+    try {
+
+        await connectDb();
+
+        const pricing = await Pricing.find();
+
+        if (!pricing) {
+            return new Response(
+                JSON.stringify({ message: "Pricing not found" }),
+                { status: 404, headers: { "Content-Type": "application/json" } }
+            );
+        }
+
+        return new Response(JSON.stringify(pricing), {
+            status: 200,
+            headers: { "Content-Type": "application/json" },
+        });
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        return new Response("Failed to connect to the database", { status: 500 });
+    }
+}

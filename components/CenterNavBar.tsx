@@ -5,7 +5,9 @@ import GymComponentMain from "./GymComponentMain";
 import { selectedNavItemAtom } from "@/stores/StoreItem.store";
 
 function CenterNavBar() {
+
   const [selectedNavItem, setSelectedNavItem] = useAtom(selectedNavItemAtom);
+
   const handleNavItemClick = (item: string) => {
     setSelectedNavItem(item);
   };
@@ -57,15 +59,14 @@ function CenterNavBar() {
           </span>
         ))}
       </nav>
-
       <div
         style={{
-          display: selectedNavItem === "Gym" ? "flex" : "none",
+          display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
-        {selectedNavItem === "Gym" && <GymComponentMain />}
+        <GymComponentMain fetchTrainerFor={selectedNavItem} />
       </div>
     </div>
   );

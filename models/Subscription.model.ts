@@ -1,23 +1,21 @@
-import mongoose, { Schema, Document, Model } from "mongoose";
+import mongoose, { Schema, } from "mongoose";
 
-interface Subscription extends Document {
-    userId: String;
-    pricingId: String;
-    subscriptionStatus: String;
-    subscriptionEnd: Date;
-    subscriptionStart: Date;
-    qrCodeUrl: String;
+export interface SubscriptionI {
+    pricingId: string;
+    status: string;
+    endDate: Date;
+    startDate: Date;
+    qrCodeUrl: string;
 }
 
-const subscriptionSchema = new Schema<Subscription>({
-    userId: { type: String, required: true },
-    pricingId: { type: String, required: true },
-    subscriptionStatus: { type: String, required: true },
-    subscriptionEnd: { type: Date, required: false },
-    subscriptionStart: { type: Date, required: false },
-    qrCodeUrl: { type: String, required: true },
+const subscriptionSchema = new Schema<SubscriptionI>({
+    pricingId: { type: String },
+    status: { type: String },
+    endDate: { type: Date },
+    startDate: { type: Date },
+    qrCodeUrl: { type: String },
 });
 
-const SubscriptionModel = mongoose.models.Subscription || mongoose.model<Subscription>("Subscription", subscriptionSchema);
+const Subscription = mongoose.models.Subscription || mongoose.model<SubscriptionI>("Subscription", subscriptionSchema);
 
-export default SubscriptionModel;
+export default Subscription;

@@ -20,11 +20,12 @@ export default function PricingCard({ PricingInformation }: { PricingInformation
 
     const [userInformation,] = useAtom(UserInformation)
     const pricingId = PricingInformation._id
-    const userId = userInformation._id
 
     const handleClickJoin = async () => {
         try {
-            const response = await fetch("/api/membership/", {
+
+            const userId = userInformation._id
+            const response = await fetch("/api/subscriptions/", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

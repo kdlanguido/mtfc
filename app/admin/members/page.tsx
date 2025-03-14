@@ -15,11 +15,7 @@ export default function page() {
 
     const router = useRouter()
     const [adminSideBarSelectedIndex, setAdminSideBarSelectedIndex] = useAtom(AdminSideBarSelectedIndex)
-    const [userInformation] = useAtom(UserInformation);
     const [isHydrated, setIsHydrated] = useState(false);
-    const handleAdminSidebarClick = (index: number) => {
-
-    }
 
     useEffect(() => {
         setIsHydrated(true);

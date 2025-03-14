@@ -1,12 +1,9 @@
-import { IUser, ProductI } from '@/constants/interfaces';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, Button, TextField, TableSortLabel } from '@mui/material';
+import { IUser } from '@/constants/interfaces';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
-import ProductModalEdit from '@/components/Products/ProductModalEdit';
-import ProductModalAdd from '@/components/Products/ProductModalAdd';
 import { MemberModalStateEdit, SelectedMember } from '@/stores/App.store';
 import MemberModalEdit from './MemberModalEdit';
 
@@ -22,9 +19,8 @@ export default function MembersTable() {
     };
 
     const handleClickEdit = (member: IUser) => {
-        console.log(member)
-        // setSelectedMember(member)
-        // setMemberModalState(true)
+        setSelectedMember(member)
+        setMemberModalState(true)
     }
 
     const filteredMembers = members.filter((member) =>
